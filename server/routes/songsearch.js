@@ -9,7 +9,7 @@ router.use((req, res, next) => {
 })
 
 // route to search form for songs
-router.get('/searchsongs', (req, res, next) => {
+router.post('/songsearch/:searchstring', (req, res, next) => {
   Song.find()
     .then(songs => {
       res.json(songs)

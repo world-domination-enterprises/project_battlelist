@@ -41,7 +41,6 @@ passport.use(
               .then(userCreated => {
                 console.log('TCL: userCreated', userCreated)
                 return done(null, userCreated)
-              .catch(err => done(err))
             })
         .catch(err => done(err));
           }
