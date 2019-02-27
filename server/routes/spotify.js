@@ -15,15 +15,17 @@ router.get("/test", (req, res, next) => {
   spotifyApi.refreshAccessToken().then(data => {
     spotifyApi.setAccessToken(data.body.access_token);
     spotifyApi
-      .getFollowedArtists()
+      .searchArtists('Elvis')
       .then(data => {
-        res.render("spotify/test", {
-          data: JSON.stringify(data, null, 2)
+        console.log('Data:', data)
+        res.json(data)
+        // res.render('/test', {
+        //   data: JSON.stringify(data, null, 2)
+        // });
         });
       })
       .catch(next);
   });
-});
 
 // TODO: protect the route so that only connected people can access it
 router.get('/favArtists', (req, res, next) => {

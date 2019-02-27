@@ -11,6 +11,7 @@ import Signup from './pages/Signup';
 import api from '../api';
 import logo from '../logo.svg';
 import Profile from './pages/Profile';
+import Test from './pages/Test';
 
 class App extends Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class App extends Component {
           <NavLink to="/songsearch">Search Song</NavLink>
           <NavLink to="/countries">Countries</NavLink>
           <NavLink to="/add-country">Add country</NavLink>
+          <NavLink to="/test">Test</NavLink>
           {!api.isLoggedIn() && <NavLink to="/signup">Signup</NavLink>}
           {!api.isLoggedIn() && <NavLink to="/login">Login</NavLink>}
           {api.isLoggedIn() && <Link to="/" onClick={(e) => this.handleLogoutClick(e)}>Logout</Link>}
@@ -45,6 +47,7 @@ class App extends Component {
           <Route path="/" exact component={Home} />
           <Route path='/songsearch' component={SongSearch} />
           <Route path='/profile' component={Profile} />
+          <Route path='/test' component={Test} />
           <Route path="/countries" component={Countries} />
           <Route path="/add-country" component={AddCountry} />
           <Route path="/signup" component={Signup} />

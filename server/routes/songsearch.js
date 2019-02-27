@@ -9,10 +9,17 @@ router.use((req, res, next) => {
 })
 
 // route to search form for songs
-router.post('/songsearch/:searchstring', (req, res, next) => {
-  Song.find()
-    .then(songs => {
-      res.json(songs)
-    })
-    .catch(err => next(err))
-});
+// router.get('/songsearch/:id', (req, res, next) => {
+//   Song.find()
+//     .then(songs => {
+//       res.json(songs)
+//     })
+//     .catch(err => next(err))
+// });
+router.get('/', (req, res, next) => {
+  spotifyApi.searchArtists('Elvis')
+  .then(data => {
+    console.log('Search artists by "Love"', data.body);
+  })
+  .catch (err => console.log(err))
+})
