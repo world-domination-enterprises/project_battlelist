@@ -34,8 +34,10 @@ class Login extends Component {
     return (
       <div className="Login">
         <h2>Login</h2>
-        {/* <Link></Link> */}
-        <Button outline color="success" onClick={(e) => this.handleClick(e)}>Login with Spotify</Button>
+        <a href={api.service.defaults.baseURL + "/spotify-login"} alt=''>
+        <Button outline color="success" >Login with Spotify</Button>
+        </a>
+        {/* onClick={(e) => this.handleClick(e)} */}
         {/* <form>
           Username: <input type="text" value={this.state.username} onChange={(e) => this.handleInputChange("username", e)} /> <br />
           Password: <input type="password" value={this.state.password} onChange={(e) => this.handleInputChange("password", e)} /> <br />

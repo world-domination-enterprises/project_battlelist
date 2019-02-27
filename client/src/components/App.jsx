@@ -6,6 +6,7 @@ import Countries from './pages/Countries';
 import AddCountry from './pages/AddCountry';
 import Secret from './pages/Secret';
 import Login from './pages/Login';
+// import LoginCallback from './pages/LoginCallback';
 import Signup from './pages/Signup';
 import api from '../api';
 import logo from '../logo.svg';
@@ -40,11 +41,12 @@ class App extends Component {
         </header>
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path='/songsearch'component={SongSearch} />
+          <Route path='/songsearch' component={SongSearch} />
           <Route path="/countries" component={Countries} />
           <Route path="/add-country" component={AddCountry} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
+          {/* <Route path='login/callback' component={LoginCallback} />} */}
           <Route path="/secret" component={Secret} />
           <Route render={() => <h2>404</h2>} />
         </Switch>

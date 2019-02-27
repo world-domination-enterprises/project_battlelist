@@ -100,7 +100,7 @@ router.get("/logout", (req, res) => {
 })
 
 router.get(
-  "/spotify",
+  "/spotify-login",
   passport.authenticate("spotify", {
     scope: [
       "user-follow-read", // https://developer.spotify.com/documentation/general/guides/scopes/#user-follow-read
@@ -120,7 +120,10 @@ router.get(
     failureMessage: true,
     successRedirect: "/profile",
     successMessage: true
-  })
+  }),
+  (req, res, next) => {
+    res.redirect(process.env.FRONTEND_URI + '/login/callback');
+  }
 );
 
 //TODO: find a way to log user out with spotify

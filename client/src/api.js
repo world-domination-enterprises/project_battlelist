@@ -87,6 +87,15 @@ export default {
       .catch(errHandler)
   },
 
+  getProfile() {
+    return service
+      .get('/profile')
+      .then(res => {
+        localStorage.setItem('user', JSON.stringify(res.data));
+      })
+      .catch(errHandler);
+  },
+
   addPicture(file) {
     const formData = new FormData()
     formData.append("picture", file)
