@@ -104,6 +104,14 @@ export default {
       })
       .catch(errHandler);
   },
+  getTest() {
+    return service
+      .get('/test')
+      .then(res => {
+        return res.data
+      })
+      .catch(errHandler);
+  },
 
   addPicture(file) {
     const formData = new FormData()
