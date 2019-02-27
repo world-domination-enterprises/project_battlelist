@@ -100,6 +100,7 @@ export default {
       .get('/profile')
       .then(res => {
         localStorage.setItem('user', JSON.stringify(res.data));
+        return res.data
       })
       .catch(errHandler);
   },

@@ -40,13 +40,14 @@ passport.use(
             })
               .then(userCreated => {
                 console.log('TCL: userCreated', userCreated)
-                spotifyApi.setRefreshToken(userCreated.refreshToken);
-                spotifyApi.refreshAccessToken()
-                  .then(data => {
-                    spotifyApi.setAccessToken(data.body.access_token);
+                return done(null, userCreated)
+                // spotifyApi.setRefreshToken(userCreated.refreshToken);
+                // spotifyApi.refreshAccessToken()
+                //   .then(data => {
+                //     spotifyApi.setAccessToken(data.body.access_token);
                     // return spotifyApi
                     //   .getMyTopArtists({ limit: 50, offset: 0, time_range: 'long_term' })
-                  })
+                  // })
                   // .then(gotArtists => {
                   //   console.log('TCL: gotArtists', gotArtists.body)
                   //   let favArtists = []

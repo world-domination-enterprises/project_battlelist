@@ -10,6 +10,7 @@ import LoginCallback from './pages/LoginCallback';
 import Signup from './pages/Signup';
 import api from '../api';
 import logo from '../logo.svg';
+import Profile from './pages/Profile';
 
 class App extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">MERN Boilerplate</h1>
           <NavLink to="/" exact>Home</NavLink>
+          <NavLink to="/profile" exact>Profile</NavLink>
           <NavLink to="/songsearch">Search Song</NavLink>
           <NavLink to="/countries">Countries</NavLink>
           <NavLink to="/add-country">Add country</NavLink>
@@ -42,6 +44,7 @@ class App extends Component {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path='/songsearch' component={SongSearch} />
+          <Route path='/profile' component={Profile} />
           <Route path="/countries" component={Countries} />
           <Route path="/add-country" component={AddCountry} />
           <Route path="/signup" component={Signup} />
