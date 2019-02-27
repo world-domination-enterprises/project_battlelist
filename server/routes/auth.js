@@ -115,10 +115,15 @@ router.get(
 
 
 router.get(
-  "/spotify-login/callback",
-  passport.authenticate("spotify", { failureRedirect: "/login" }),
+  "/login/callback",
+  passport.authenticate("spotify", {
+    failureRedirect: process.env.FRONTEND_URI + '/',
+    failureMessage: true,
+    successRedirect: process.env.FRONTEND_URI + '/songsearch',
+    successMessage: true
+  }),
   (req, res, next) => {
-    res.redirect(process.env.FRONTEND_URI + "/login/callback");
+    res.redirect('/api/login/callback');
   }
 );
 // router.get(

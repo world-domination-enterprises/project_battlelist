@@ -46,11 +46,19 @@ export default {
   //     .catch(errHandler)
   // },
 
+  // login() {
+  //   return service
+  //     .get('/spotify')
+  //     .then(res => res.data)
+  //     .catch(errHandler)
+  // },
+
   login() {
     return service
-      .get('/spotify')
-      .then(res => res.data)
-      .catch(errHandler)
+      .get('login/callback')
+      .then(res => (
+        res.redirect(process.env.FRONTEND_URI + '/songsearch', res.data)
+      ))
   },
 
   logout() {
