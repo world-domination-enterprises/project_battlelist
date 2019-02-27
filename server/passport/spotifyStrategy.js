@@ -41,38 +41,12 @@ passport.use(
               .then(userCreated => {
                 console.log('TCL: userCreated', userCreated)
                 return done(null, userCreated)
-                // spotifyApi.setRefreshToken(userCreated.refreshToken);
-                // spotifyApi.refreshAccessToken()
-                //   .then(data => {
-                //     spotifyApi.setAccessToken(data.body.access_token);
-                    // return spotifyApi
-                    //   .getMyTopArtists({ limit: 50, offset: 0, time_range: 'long_term' })
-                  // })
-                  // .then(gotArtists => {
-                  //   console.log('TCL: gotArtists', gotArtists.body)
-                  //   let favArtists = []
-                  //   let favGenres = []
-                  //   for (let i of gotArtists.body.items) {
-                  //     favArtists.push(i.name)
-                  //     favGenres.push(...i.genres)
-                  //   }
-                  //   userCreated.favArtists = favArtists
-                  //   userCreated.favGenres = favGenres
-                  //   console.log('TCL: userCreated', userCreated)
-                  //   console.log('TCL: favArtists', favArtists)
-                  //   console.log('TCL: userCreated.favArtists', userCreated.favArtists)
-                  //   console.log('TCL: favGenres', favGenres)
-                  //   return User.findOneAndUpdate({ _id: userCreated._id }, { $set: { favArtists: favArtists, favGenres: favGenres } }, { new: true })
-                  // })
-              //     .then(artistUpdated => {
-              //       return done(null, userCreated); // We log in the user that was just created
-              //     })
-              //     .catch(err => done(err))
-              // })
               .catch(err => done(err))
-            }
-        })
+            })
         .catch(err => done(err));
-    }
+          }
+        });
+      }
   )
 );
+    
