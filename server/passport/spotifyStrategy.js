@@ -39,9 +39,8 @@ passport.use(
               photoUrl: profile.photos[0]
             })
               .then(userCreated => {
-                return done(null, userCreated);
-              })
-                // console.log('TCL: userCreated', userCreated)
+                console.log('TCL: userCreated', userCreated)
+                return done(null, userCreated)
                 // spotifyApi.setRefreshToken(userCreated.refreshToken);
                 // spotifyApi.refreshAccessToken()
                 //   .then(data => {
