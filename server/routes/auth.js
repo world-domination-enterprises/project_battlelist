@@ -113,18 +113,26 @@ router.get(
   })
 );
 
+
 router.get(
-  "/spotify/callback",
-  passport.authenticate("spotify", {
-    failureRedirect: "/",
-    failureMessage: true,
-    successRedirect: "/profile",
-    successMessage: true
-  }),
+  "/spotify-login/callback",
+  passport.authenticate("spotify", { failureRedirect: "/login" }),
   (req, res, next) => {
-    res.redirect(process.env.FRONTEND_URI + '/login/callback');
+    res.redirect(process.env.FRONTEND_URI + "/login/callback");
   }
 );
+// router.get(
+//   "/spotify/callback",
+//   passport.authenticate("spotify", {
+//     failureRedirect: "/",
+//     failureMessage: true,
+//     successRedirect: "/profile",
+//     successMessage: true
+//   }),
+//   (req, res, next) => {
+//     res.redirect(process.env.FRONTEND_URI + '/login/callback');
+//   }
+// );
 
 //TODO: find a way to log user out with spotify
 
