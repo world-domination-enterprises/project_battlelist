@@ -9,7 +9,7 @@ const spotifyApi = new SpotifyWebApi({
   // redirectUri: 'http://www.example.com/callback'
 });
 
-// TODO: protect the route so that only connected people can access it
+// TODO: protect the route so that only connected people can access fit
 router.get("/test", (req, res, next) => {
   spotifyApi.setRefreshToken(req.user.refreshToken);
   spotifyApi.refreshAccessToken().then(data => {
