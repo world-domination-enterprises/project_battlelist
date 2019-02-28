@@ -16,3 +16,6 @@ const SongSchema = new mongoose.Schema({
     required: true,
   },
 })
+
+const Song = mongoose.model('Song', countrySchema);
+module.exports = Song;

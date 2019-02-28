@@ -35,14 +35,14 @@ export default class SongSearch extends Component {
       const spotifyApi = new SpotifyWebApi()
 
       spotifyApi.setAccessToken(this.state.accessToken);
-          spotifyApi.searchTracks(this.state.searchString, {limit: 10,})
-            .then(data => {
-              JSON.stringify(data, null, 2)
-							console.log('TCL: SongSearch -> handleKeyUp -> data', data)
-              this.setState({
-              results: data.body.tracks.items
-              })
-            })
+      spotifyApi.searchTracks(this.state.searchString, {limit: 10,})
+        .then(data => {
+          JSON.stringify(data, null, 2)
+					console.log('TCL: SongSearch -> handleKeyUp -> data', data)
+          this.setState({
+          results: data.body.tracks.items
+          })
+        })
       }, 2000) // Timeout before search is executed
     })
   }
@@ -68,7 +68,7 @@ export default class SongSearch extends Component {
           </FormGroup>
         </Form>
         {this.state.results.map((song, i) => 
-        <ListItem title={song.name} artist={song.artists[0].name} img={song.album.images[0].url} key={i}/>
+        <ListItem title={song.name} artist={song.artists[0].name} img={song.album.images[0].url} trackId={song.id} key={i}/>
         )}
         </div>
       )

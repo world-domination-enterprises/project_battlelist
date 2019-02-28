@@ -9,6 +9,7 @@ export default function ListItem(props) {
         <Card body>
           <CardTitle><strong>{props.title} </strong>by {props.artist}</CardTitle>
           <CardText><img src={props.img} alt="album-cover-art" className="cover-art"/></CardText>
+          <iframe title='track-preview' src={`https://open.spotify.com/embed/track/${props.trackId}`} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
           <Button>Add +</Button>
         </Card>
       </Col>
