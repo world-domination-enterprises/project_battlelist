@@ -24,6 +24,27 @@ router.get("/test", (req, res, next) => {
       .catch(next);
   });
 
+//  Get searchstring from Axios and query spotify API
+router.post("/songsearch", (req, res, next) => {
+  const { searchString } = req.body
+
+  spotifyApi.setRefreshToken(req.user.refreshToken);
+  spotifyApi.refreshAccessToken().then(data => {
+    spotifyApi.setAccessToken(data.body.access_token);
+    spotifyApi
+      .searchTracks(searchString)
+      .then(data => {
+        console.log('YEAH: SongData!!!', data)
+        res.json(data)
+        // res.render('/test', {
+        //   data: JSON.stringify(data, null, 2)
+        // });
+        });
+      })
+      .catch(next);
+  });  
+
+
 // TODO: protect the route so that only connected people can access it
 router.get('/favArtists', (req, res, next) => {
   spotifyApi.setRefreshToken(req.user.refreshToken);

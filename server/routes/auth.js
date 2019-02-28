@@ -138,6 +138,19 @@ router.get(
   }
 );
 
+// router.get(
+//   "/api/login/callback",
+//   passport.authenticate("spotify", {
+//     failureRedirect: process.env.FRONTEND_URI + '/',
+//     failureMessage: true,
+//     successRedirect: process.env.FRONTEND_URI + '/songsearch',
+//     successMessage: true
+//   }),
+//   (req, res, next) => {
+//     res.redirect('/api/login/callback');
+//   }
+// );
+
 //TODO: find a way to log user out with spotify
 
 router.get('/logout', function(req, res){
