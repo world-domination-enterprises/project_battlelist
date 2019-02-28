@@ -113,6 +113,17 @@ export default {
       })
       .catch(errHandler);
   },
+
+  refreshAndFetchAccessToken() {
+    return service
+      .get('/accesstoken')
+      .then(res => {
+        localStorage.setItem('accessToken', JSON.stringify(res.data));
+        return res.data
+      })
+      .catch(errHandler);
+  }, 
+
   getTest() {
     return service
       .get('/test')
