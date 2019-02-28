@@ -113,13 +113,11 @@ export default {
       })
       .catch(errHandler);
   },
-  getTest() {
+  postTest(data) {
     return service
-      .get('/test')
-      .then(res => {
-        return res.data
-      })
-      .catch(errHandler);
+      .post('/test/add', data)
+      .then(res => res.data)
+      .catch(errHandler)
   },
 
   addPicture(file) {

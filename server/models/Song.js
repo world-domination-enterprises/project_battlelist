@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const SongSchema = new mongoose.Schema({
+  artist: String,
   name: {
     type: String,
     required: true,
@@ -15,4 +16,10 @@ const SongSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  songId: String,
+  imgUrl: String
 })
+
+const Song = mongoose.model('Song', SongSchema);
+
+module.exports = Song;

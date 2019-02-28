@@ -47,7 +47,7 @@ export default class SongSearch extends Component {
       .catch(err => next(err));
     })
     .catch(err => next(err));
-
+  
   render() {
     // let possibleSongs = []
 
@@ -63,8 +63,5 @@ export default class SongSearch extends Component {
       </div>
     )
   }
-
-
-{/* {possibleSongs.map((song, i) => 
-      <ListItem title={song.state.title} artist={song.state.artist} key={i}/>
-      )} */}
+}
+}
