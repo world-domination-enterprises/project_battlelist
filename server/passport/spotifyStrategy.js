@@ -33,6 +33,7 @@ passport.use(
               username: profile.displayName,
               spotifyID: profile.id,
               refreshToken,
+              accessToken,
               email: profile.emails[0].value,
               country: profile.country,
               profileUrl: profile.profileUrl,

@@ -16,10 +16,3 @@ router.use((req, res, next) => {
 //     })
 //     .catch(err => next(err))
 // });
-router.get('/', (req, res, next) => {
-  spotifyApi.searchArtists('Elvis')
-  .then(data => {
-    console.log('Search artists by "Love"', data.body);
-  })
-  .catch (err => console.log(err))
-})

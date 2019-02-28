@@ -18,11 +18,8 @@ router.get("/test", (req, res, next) => {
     spotifyApi
       .searchArtists('Elvis')
       .then(data => {
-        console.log('Data:', data)
-        res.json(data)
-        // res.render('/test', {
-        //   data: JSON.stringify(data, null, 2)
-        // });
+        console.log('Data:', data.body.artists.items)
+        res.json(data.body.artists.items)
         });
       })
       .catch(next);
