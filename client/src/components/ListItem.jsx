@@ -26,7 +26,7 @@ render() {
         <Card body>
           <CardTitle><strong>{this.props.title} </strong>by {this.props.artist}</CardTitle>
           <CardText><img src={this.props.img} alt="album-cover-art" className="cover-art"/></CardText>
-          <iframe title='track-preview' src={`https://open.spotify.com/embed/track/${this.props.trackId}`} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          <iframe title='track-preview' src={`https://open.spotify.com/embed/track/${this.props.songId}`} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
           <Button onClick={() => this.addSong()} >Add +</Button>
         </Card>
       </Col>
