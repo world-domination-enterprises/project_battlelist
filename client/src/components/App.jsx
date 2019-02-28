@@ -52,7 +52,7 @@ class App extends Component {
           <Route path="/add-country" component={AddCountry} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
-          <Route path='login/callback' component={LoginCallback} />}
+          <Route path='/login/callback' component={LoginCallback} />}
           <Route path="/secret" component={Secret} />
           <Route render={() => <h2>404</h2>} />
         </Switch>

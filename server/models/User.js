@@ -5,6 +5,7 @@ const userSchema = new Schema({
   username: String,
   spotifyID: String,
   refreshToken: String,
+  accessToken: String,
   email: String,
   country: String,
   profileUrl: String,

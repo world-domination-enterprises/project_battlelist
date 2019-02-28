@@ -7,9 +7,9 @@ export default function ListItem(props) {
      <Row>
       <Col sm="6">
         <Card body>
-          <CardTitle>{props.title}</CardTitle>
-          <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-          <Button>Go somewhere</Button>
+          <CardTitle><strong>{props.title} </strong>by {props.artist}</CardTitle>
+          <CardText><img src={props.img} alt="album-cover-art" className="cover-art"/></CardText>
+          <Button>Add +</Button>
         </Card>
       </Col>
       </Row>
