@@ -32,6 +32,15 @@ export default {
       .catch(errHandler)
   },
 
+  songSearch(searchString) {
+    return service
+      .post('/songsearch', searchString)
+      .then(res => {
+        console.log('TCL: songSearch -> es.data', res.data)
+        return res.data
+      })
+  }, 
+
   // login(username, password) {
   //   return service
   //     .post('/login', {
