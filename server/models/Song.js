@@ -13,7 +13,7 @@ const SongSchema = new mongoose.Schema({
     default: [],
   },
   year: {
-    type: Number,
+    type: String,
     required: true,
   },
   songId: String,

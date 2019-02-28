@@ -16,7 +16,8 @@ router.get('/profile', isLoggedIn, (req, res, next) => {
   res.json(req.user);
 });
 
-router.post("/test/add", (req, res, next) => {
+router.post("/songsearch/add", (req, res, next) => {
+  console.log('Backend called')
   Song.create({
     artist: req.body.artist,
     name: req.body.name,
@@ -27,9 +28,8 @@ router.post("/test/add", (req, res, next) => {
   })
     .then(songCreated => {
       console.log('TCL: songCreated', songCreated)
-      return done(null, songCreated)
   })
-.catch(err => done(err));
+.catch(err => console.log(err));
 })
 
 

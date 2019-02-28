@@ -113,10 +113,6 @@ export default {
       })
       .catch(errHandler);
   },
-<<<<<<< HEAD
-  postTest(data) {
-=======
-
   refreshAndFetchAccessToken() {
     return service
       .get('/accesstoken')
@@ -127,10 +123,11 @@ export default {
       .catch(errHandler);
   }, 
 
-  getTest() {
->>>>>>> 36c409ce1a891d6bd392ac15083769b4bdc752e6
+  postTest(data) {
+    console.log('api called with following data ',data)
+
     return service
-      .post('/test/add', data)
+      .post('/songsearch/add', data)
       .then(res => res.data)
       .catch(errHandler)
   },

@@ -9,6 +9,7 @@ export default class ListItem extends Component {
     this.addSong = this.addSong.bind(this);
   }
   addSong() {
+    console.log('frontend called')
     api.postTest({
       artist: this.props.artist,
       name: this.props.title,
