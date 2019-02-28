@@ -12,7 +12,7 @@ export default class SongSearch extends Component {
       accessToken: '',
       results: [],
       typingTimeout: 0,
-      error: '',
+      error: ''
     }
     this.handleKeyUp = this.handleKeyUp.bind(this);
   }
@@ -68,7 +68,7 @@ export default class SongSearch extends Component {
           </FormGroup>
         </Form>
         {this.state.results.map((song, i) => 
-        <ListItem title={song.name} artist={song.artists[0].name} img={song.album.images[0].url} trackId={song.id} key={i}/>
+         <ListItem title={song.name} artist={song.artists[0].name} img={song.album.images[0].url} key={i} songId={song.id} rlsDate={song.album.release_date}/>
         )}
         </div>
       )

@@ -113,7 +113,6 @@ export default {
       })
       .catch(errHandler);
   },
-
   refreshAndFetchAccessToken() {
     return service
       .get('/accesstoken')
@@ -124,13 +123,13 @@ export default {
       .catch(errHandler);
   }, 
 
-  getTest() {
+  postTest(data) {
+    console.log('api called with following data ',data)
+
     return service
-      .get('/test')
-      .then(res => {
-        return res.data
-      })
-      .catch(errHandler);
+      .post('/songsearch/add', data)
+      .then(res => res.data)
+      .catch(errHandler)
   },
 
   addPicture(file) {
