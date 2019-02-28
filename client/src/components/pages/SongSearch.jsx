@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-// import ListItem from '../ListItem'
+import ListItem from '../ListItem'
 import { Form, FormGroup, Label, Input } from 'reactstrap';
-import { SpotifyWebApi } from 'spotify-web-api-js'
+import SpotifyWebApi from 'spotify-web-api-node'
 import api from '../../api';
 
 export default class SongSearch extends Component {
@@ -9,8 +9,12 @@ export default class SongSearch extends Component {
     super(props)
     this.state = {
       searchString: '',
-      refreshToken: '',
+      accessToken: '',
+      results: [],
+      typingTimeout: 0,
+      error: '',
     }
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
   handleInputChange(stateFieldName, event) {
@@ -19,49 +23,54 @@ export default class SongSearch extends Component {
     })
   }
 
-  componentDidMount() {
-    const spotifyApi = new SpotifyWebApi()
-    const { searchString } = this.state
-    
-    api.getProfile()
-     .then(user => {
-      console.log('TCL: user', user)
-      this.setState({
-        refreshToken: user.refreshToken
-      })
+  handleKeyUp(e) {
+    console.log('keyup triggered')
+    if (this.state.typingTimeout) {
+      clearTimeout(this.state.typingTimeout);
+   }
+   this.setState({
+    typingTimeout: setTimeout(() => {
+      console.log('Search triggered!')
 
-    spotifyApi.setRefreshToken(this.state.refreshToken);
-    spotifyApi.refreshAccessToken()
-      .then(data => {
-        spotifyApi.setAccessToken(data.body.access_token);
-        spotifyApi.searchTracks(searchString)
-        .then(data => {
-          console.log('YEAH: SongData!!!', data)
-          res.json(data)
-          // res.render('/test', {
-          //   data: JSON.stringify(data, null, 2)
-          // });
-          })
-        .catch(err => next(err));
-        })
-      .catch(err => next(err));
+      const spotifyApi = new SpotifyWebApi()
+
+      spotifyApi.setAccessToken(this.state.accessToken);
+          spotifyApi.searchTracks(this.state.searchString, {limit: 10,})
+            .then(data => {
+              JSON.stringify(data, null, 2)
+							console.log('TCL: SongSearch -> handleKeyUp -> data', data)
+              this.setState({
+              results: data.body.tracks.items
+              })
+            })
+      }, 2000) // Timeout before search is executed
     })
-    .catch(err => next(err));
-  
-  render() {
-    // let possibleSongs = []
-
-    return (
-      <div className='SongSearch'>
-      <Form>
-        <FormGroup>
-          <Label for="song">Song</Label>
-          <Input type="text" name="song" value={this.state.songTitle} id="song" placeholder="Enter Song Title" onChange={(e) => this.handleInputChange("songTitle", e)} />
-        </FormGroup>
-      </Form>
-      
-      </div>
-    )
   }
-}
-}
+
+  componentDidMount() {
+    api.refreshAndFetchAccessToken()
+      .then(data => {
+        console.log('TCL: data', data)
+        this.setState({
+          accessToken: data.body.access_token,
+        })
+      })
+    }  
+    
+    render() {  
+      return (
+        <div className='SongSearch'>
+       <h1>Search for Songs</h1>   
+        <Form>
+          <FormGroup>
+            <Label for="song">Song</Label>
+            <Input type="text" name="song" value={this.state.searchString} id="song" placeholder="Enter Song Title" onChange={(e) => this.handleInputChange("searchString", e)} onKeyUp={(e) => this.handleKeyUp(e)}/>
+          </FormGroup>
+        </Form>
+        {this.state.results.map((song, i) => 
+        <ListItem title={song.name} artist={song.artists[0].name} img={song.album.images[0].url} key={i}/>
+        )}
+        </div>
+      )
+    }
+  }

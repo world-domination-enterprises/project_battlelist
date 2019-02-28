@@ -1,6 +1,7 @@
 const express = require("express");
 const SpotifyWebApi = require("spotify-web-api-node");
 const router = express.Router();
+const { isLoggedIn } = require('../middlewares')
 
 // credentials are optional
 const spotifyApi = new SpotifyWebApi({
@@ -23,6 +24,16 @@ router.get("/test", (req, res, next) => {
       })
       .catch(next);
   });
+
+router.get('/accesstoken', isLoggedIn, (req, res, next) => {
+  spotifyApi.setRefreshToken(req.user.refreshToken);
+  spotifyApi.refreshAccessToken()
+    .then(data => {res.json(data);
+    });
+  })
+
+
+// *********************************************************************************************************
 
 //  Get searchstring from Axios and query spotify API
 router.post("/songsearch", (req, res, next) => {

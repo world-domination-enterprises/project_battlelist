@@ -113,7 +113,22 @@ export default {
       })
       .catch(errHandler);
   },
+<<<<<<< HEAD
   postTest(data) {
+=======
+
+  refreshAndFetchAccessToken() {
+    return service
+      .get('/accesstoken')
+      .then(res => {
+        localStorage.setItem('accessToken', JSON.stringify(res.data));
+        return res.data
+      })
+      .catch(errHandler);
+  }, 
+
+  getTest() {
+>>>>>>> 36c409ce1a891d6bd392ac15083769b4bdc752e6
     return service
       .post('/test/add', data)
       .then(res => res.data)
