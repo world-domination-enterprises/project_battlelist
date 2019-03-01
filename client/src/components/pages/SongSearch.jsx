@@ -25,13 +25,11 @@ export default class SongSearch extends Component {
   }
 
   handleKeyUp(e) {
-    console.log('keyup triggered')
     if (this.state.typingTimeout) {
       clearTimeout(this.state.typingTimeout);
    }
    this.setState({
     typingTimeout: setTimeout(() => {
-      console.log('Search triggered!')
 
       const spotifyApi = new SpotifyWebApi()
 
