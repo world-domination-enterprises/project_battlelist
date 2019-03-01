@@ -10,6 +10,8 @@ const userSchema = new Schema({
   country: String,
   profileUrl: String,
   photoUrl: String,
+  activePlaylists: [{type: Schema.Types.ObjectId, ref:'Playlist'}],
+  editing: {type: Schema.Types.ObjectId, ref:'Playlist'} 
 }, {
     timestamps: {
       createdAt: 'created_at',
