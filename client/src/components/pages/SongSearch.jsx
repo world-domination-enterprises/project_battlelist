@@ -47,7 +47,6 @@ export default class SongSearch extends Component {
       }, 2000) // Timeout before search is executed
     })
   }
-
   componentDidMount() {
     api.refreshAndFetchAccessToken()
       .then(data => {
@@ -57,7 +56,6 @@ export default class SongSearch extends Component {
         })
       })
     }  
-    
     render() {  
       return (
         <div className='SongSearch'>
