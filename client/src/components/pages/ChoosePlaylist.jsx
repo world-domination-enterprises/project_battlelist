@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import api from '../../api';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 
 export default class ChoosePlaylist extends Component {
@@ -16,6 +17,15 @@ export default class ChoosePlaylist extends Component {
       [stateFieldName]: event.target.value
     })
   }
+  addPlaylist() {
+    api.addPlaylist({
+      name: this.state.playlistName
+    })
+    .then(user => {
+      console.log(user)
+      this.props.history.push("/createplaylist")
+    })
+  }
   render() {
     return (
       <div className="container row w-100 mx-auto">
@@ -30,7 +40,7 @@ export default class ChoosePlaylist extends Component {
           </FormGroup>
         </Form>
 
-        <a href="http://localhost:3000/createplaylist"><button className="btn btn-primary mx-auto">Create playlist</button></a>
+        <button className="btn btn-primary mx-auto" onClick={() => this.addPlaylist()}>Create playlist</button>
         <button className="btn btn-primary m-3 mx-auto">Join playlist</button>
 
         </div>

@@ -131,6 +131,14 @@ export default {
       .then(res => res.data)
       .catch(errHandler)
   },
+  addPlaylist(data) {
+    console.log('api called with following data ',data)
+
+    return service
+      .post('/createplaylist/create', data)
+      .then(res => res.data)
+      .catch(errHandler)
+  },
 
   addPicture(file) {
     const formData = new FormData()

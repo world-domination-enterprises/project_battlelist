@@ -2,6 +2,7 @@ const express = require('express');
 const { isLoggedIn } = require('../middlewares')
 const router = express.Router();
 const Song = require("../models/Song");
+const Playlist = require("../models/Playlist");
 
 
 router.get('/secret', isLoggedIn, (req, res, next) => {
@@ -16,8 +17,23 @@ router.get('/profile', isLoggedIn, (req, res, next) => {
   res.json(req.user);
 });
 
+// Add playlist to db
+router.post("/createplaylist/create", (req, res, next) => {
+  Playlist.create({
+    name: req.body.name
+  })
+    .then(playlistCreated => {
+      console.log('TCL: playlistCreated', playlistCreated)
+      res.json({})
+  })
+.catch(err => {
+  console.log(err)
+  res.json({ message: "error."})
+});
+})
+
+// Add song to db
 router.post("/songsearch/add", (req, res, next) => {
-  console.log('Backend called')
   Song.create({
     artist: req.body.artist,
     name: req.body.name,

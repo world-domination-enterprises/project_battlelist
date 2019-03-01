@@ -7,12 +7,12 @@ const playlistSchema = new mongoose.Schema({
     minlength: 1,
   },
   _songs: {
-    type: [Schema.Types.ObjectId],
+    type: [mongoose.Schema.Types.ObjectId],
     ref: 'Song',
     default: [],
   },
   _users: {
-    type: [Schema.Types.ObjectId],
+    type: [mongoose.Schema.Types.ObjectId],
     ref: 'User',
     default: [],
   },
