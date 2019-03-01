@@ -80,7 +80,13 @@ body {
   height: 200px;
   width: 200px;
 }
-
+.SongSearch {
+  display: flex;
+}
+.search, .playlist {
+  border: 1px solid;
+  width: 50%;
+}
 // --------------------
 // Style for Home component
 .Home {
