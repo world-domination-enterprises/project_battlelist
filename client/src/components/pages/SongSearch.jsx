@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ListItem from '../ListItem'
+import ListItemSongsearch from '../ListItemSongsearch'
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import SpotifyWebApi from 'spotify-web-api-node'
 import api from '../../api';
@@ -68,7 +68,7 @@ export default class SongSearch extends Component {
           </FormGroup>
         </Form>
         {this.state.results.map((song, i) => 
-         <ListItem title={song.name} artist={song.artists[0].name} img={song.album.images[0].url} key={i} songId={song.id} rlsDate={song.album.release_date}/>
+         <ListItemSongsearch title={song.name} artist={song.artists[0].name} img={song.album.images[0].url} key={i} songId={song.id} rlsDate={song.album.release_date}/>
         )}
         </div>
         <PlayList />

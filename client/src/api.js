@@ -36,7 +36,7 @@ export default {
     return service
       .post('/songsearch', searchString)
       .then(res => {
-        console.log('TCL: songSearch -> es.data', res.data)
+        console.log('TCL: songSearch -> res.data', res.data)
         return res.data
       })
   }, 
@@ -113,6 +113,7 @@ export default {
       })
       .catch(errHandler);
   },
+
   refreshAndFetchAccessToken() {
     return service
       .get('/accesstoken')
@@ -123,7 +124,17 @@ export default {
       .catch(errHandler);
   }, 
 
-  postTest(data) {
+  getPlaylist(_playlist) {
+    return service 
+      .post ('/playlist', _playlist)
+      .then(res => {
+        localStorage.setItem('playlist', JSON.stringify(res.data));
+        return res.data
+      })  
+      .catch(errHandler)
+  },
+
+  postSong(data) {
     console.log('api called with following data ',data)
 
     return service
@@ -131,6 +142,11 @@ export default {
       .then(res => res.data)
       .catch(errHandler)
   },
+
+
+
+
+  // ********************************************************************************
 
   addPicture(file) {
     const formData = new FormData()
