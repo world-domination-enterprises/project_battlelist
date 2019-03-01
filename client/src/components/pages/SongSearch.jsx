@@ -3,6 +3,7 @@ import ListItem from '../ListItem'
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import SpotifyWebApi from 'spotify-web-api-node'
 import api from '../../api';
+import PlayList from '../PlayList'
 
 export default class SongSearch extends Component {
   constructor(props)  {
@@ -46,7 +47,6 @@ export default class SongSearch extends Component {
       }, 2000) // Timeout before search is executed
     })
   }
-
   componentDidMount() {
     api.refreshAndFetchAccessToken()
       .then(data => {
@@ -56,10 +56,10 @@ export default class SongSearch extends Component {
         })
       })
     }  
-    
     render() {  
       return (
         <div className='SongSearch'>
+        <div className="search">
        <h1>Search for Songs</h1>   
         <Form>
           <FormGroup>
@@ -70,6 +70,8 @@ export default class SongSearch extends Component {
         {this.state.results.map((song, i) => 
          <ListItem title={song.name} artist={song.artists[0].name} img={song.album.images[0].url} key={i} songId={song.id} rlsDate={song.album.release_date}/>
         )}
+        </div>
+        <PlayList />
         </div>
       )
     }
