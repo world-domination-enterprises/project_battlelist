@@ -20,7 +20,10 @@ router.get('/profile', isLoggedIn, (req, res, next) => {
 // Add playlist to db
 router.post("/createplaylist/create", (req, res, next) => {
   Playlist.create({
-    name: req.body.name
+    name: req.body.name,
+    _users: req.body._users,
+    _host: req.body._host,
+    isActive: req.body.isActive,
   })
     .then(playlistCreated => {
       console.log('TCL: playlistCreated', playlistCreated)

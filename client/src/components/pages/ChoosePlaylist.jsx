@@ -7,31 +7,46 @@ export default class ChoosePlaylist extends Component {
     super(props)
     this.state = {
       playlistName: '',
+      _playlistCreator: null,
       start: null,
       end: null,
-      numberOfSongs: 1
+      numberOfSongs: 0,
+      isActive: false,
     }
   }
   handleInputChange(stateFieldName, event) {
     this.setState({
-      [stateFieldName]: event.target.value
+      [stateFieldName]: event.target.value,
+      isActive: !this.state.isActive || true,
     })
   }
   addPlaylist() {
     api.addPlaylist({
-      name: this.state.playlistName
+      name: this.state.playlistName,
+      _users: this.state._playlistCreator,
+      _host: this.state._playlistCreator,
+      isActive: this.state.isActive,
     })
     .then(user => {
       console.log(user)
       this.props.history.push("/createplaylist")
     })
   }
+  componentDidMount(){
+    api.getProfile()
+      .then(user => {
+        console.log('TCL: ChoosePlaylist -> componentDidMount -> user', user)
+        this.setState({
+          _playlistCreator: user._id
+        })
+      })
+  }
   render() {
     return (
       <div className="container row w-100 mx-auto">
-        <div class="col-12 main-page-container d-flex flex-column align-self-center mx-auto">
-        <h1 class="main-h1 text-center">CHOOSE:</h1>
-        <p class="sub-p text-center">Join the party or create your own</p>
+        <div className="col-12 main-page-container d-flex flex-column align-self-center mx-auto">
+        <h1 className="main-h1 text-center">CHOOSE:</h1>
+        <p className="sub-p text-center">Join the party or create your own</p>
 
         <Form>
           <FormGroup>

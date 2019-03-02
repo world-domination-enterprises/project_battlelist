@@ -7,11 +7,14 @@ const playlistSchema = new mongoose.Schema({
     required: [true, 'Playlists have to have a name.'],
     minlength: 1,
   },
+  _host:
+    {type: Schema.Types.ObjectId, ref: 'User'}
+  ,
   _songs:
     [{type: Schema.Types.ObjectId, ref: 'Song', default:[] }]
   ,
   _users:
-    [{type: Schema.Types.ObjectId, ref: 'User', default:[] }]
+    [{type: Schema.Types.ObjectId, ref: 'User'}]
   ,
   description: {
     type: String,
