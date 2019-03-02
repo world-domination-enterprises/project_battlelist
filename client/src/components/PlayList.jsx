@@ -16,7 +16,7 @@ export default class PlayList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="pl-container">
         <div className="userSongs">
             <ul>
               {this.state.songsInPlaylist.map((song, i) => 
@@ -30,6 +30,7 @@ export default class PlayList extends Component {
                 <ListItemPlaylist title={song.title} artist={song.artist} img={song} songId={song.id} key={i} />
               )}
             </ul>
+            TEST
         </div>
       </div>
     )
