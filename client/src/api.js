@@ -135,18 +135,21 @@ export default {
   },
 
   postSong(data) {
-    console.log('api called with following data ',data)
-
     return service
       .post('/songsearch/add', data)
       .then(res => res.data)
       .catch(errHandler)
   },
   addPlaylist(data) {
-    console.log('api called with following data ',data)
-
     return service
       .post('/createplaylist/create', data)
+      .then(res => res.data)
+      .catch(errHandler)
+  },
+  fetchSongs(data) {
+    console.log('fetchsongs called with following data ', data)
+    return service
+      .post('/fetchsongs')
       .then(res => res.data)
       .catch(errHandler)
   },

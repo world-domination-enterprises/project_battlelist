@@ -56,7 +56,16 @@ router.post('/playlist', isLoggedIn, (req, res, next) => {
       })
     .catch(err => console.log(err))  
 })
-
+// Get songs from db
+router.post('/fetchsongs', (req, res, next) => { 
+  console.log('test :', req.body)
+  Song.findOne({ 'songId' : '3ssX20QT5c3nA9wk78V1LQ' }, 'artist name', (err, song) => {
+}).then(data => {
+  console.log('the result yao', data)
+  res.json(data)
+})
+.catch(err => console.log(err))  
+})
 
 
 module.exports = router;

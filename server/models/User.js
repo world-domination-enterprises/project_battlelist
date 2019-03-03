@@ -11,7 +11,8 @@ const userSchema = new Schema({
   profileUrl: String,
   photoUrl: String,
   activePlaylists: [{type: Schema.Types.ObjectId, ref:'Playlist'}],
-  editing: {type: Schema.Types.ObjectId, ref:'Playlist'} 
+  inactivePlaylists: [{type: Schema.Types.ObjectId, ref:'Playlist'}],
+  currentlyEditing: {type: Schema.Types.ObjectId, ref:'Playlist'} //  TODO: fix size to only one element
 }, {
     timestamps: {
       createdAt: 'created_at',

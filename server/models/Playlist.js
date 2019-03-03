@@ -28,6 +28,7 @@ const playlistSchema = new mongoose.Schema({
   },
 });
 
+const Song = require("../models/Song");
 const Playlist = mongoose.model('Playlist', playlistSchema);
 
 module.exports = Playlist;
