@@ -114,6 +114,18 @@ export default {
       .catch(errHandler);
   },
 
+  updateUser(_user, _playlist) {
+    console.log('api called with following data ', {_user, _playlist})
+
+    return service
+      .post('/profile/update', {_user, _playlist})
+      .then(res => {
+        localStorage.setItem('user', JSON.stringify(res.data));
+        return res.data
+      })
+      .catch(errHandler);
+  },
+
   refreshAndFetchAccessToken() {
     return service
       .get('/accesstoken')
@@ -135,7 +147,7 @@ export default {
   },
 
   postSong(data) {
-    console.log('api called with following data ',data)
+    console.log('api called with following data ', data)
 
     return service
       .post('/songsearch/add', data)
@@ -143,11 +155,13 @@ export default {
       .catch(errHandler)
   },
   addPlaylist(data) {
-    console.log('api called with following data ',data)
+    console.log('api called with following data ', data)
 
     return service
       .post('/createplaylist/create', data)
-      .then(res => res.data)
+      .then(res => {
+        return res.data
+      })
       .catch(errHandler)
   },
 

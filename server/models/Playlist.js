@@ -23,6 +23,7 @@ const playlistSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  playlistCode: String,
   spotifyId: String,
   }, {
     timestamps: {

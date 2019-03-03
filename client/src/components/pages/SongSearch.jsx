@@ -18,6 +18,10 @@ export default class SongSearch extends Component {
     this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
+  handleSubmit(e) {
+    e.preventDefault()
+  }
+
   handleInputChange(stateFieldName, event) {
     this.setState({
       [stateFieldName]: event.target.value
@@ -59,10 +63,10 @@ export default class SongSearch extends Component {
         <div className='SongSearch'>
         <div className="search">
        <h1>Search for Songs</h1>   
-        <Form>
+        <Form onSubmit={(e) => this.handleSubmit(e)} >
           <FormGroup>
             <Label for="song">Song</Label>
-            <Input type="text" name="song" value={this.state.searchString} id="song" placeholder="Enter Song Title" onChange={(e) => this.handleInputChange("searchString", e)} onKeyUp={(e) => this.handleKeyUp(e)}/>
+            <Input type="text" name="song" value={this.state.searchString} id="song" placeholder="Enter Song Title" onChange={(e) => this.handleInputChange("searchString", e)} onKeyUp={(e) => this.handleKeyUp(e)} />
           </FormGroup>
         </Form>
         {this.state.results.map((song, i) => 

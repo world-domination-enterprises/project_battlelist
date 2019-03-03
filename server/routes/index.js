@@ -2,6 +2,7 @@ const express = require('express');
 const { isLoggedIn } = require('../middlewares')
 const router = express.Router();
 const Song = require("../models/Song");
+const User = require('../models/User')
 const Playlist = require("../models/Playlist");
 
 
@@ -12,10 +13,22 @@ router.get('/secret', isLoggedIn, (req, res, next) => {
   });
 });
 
-
+//  Get the users profile
 router.get('/profile', isLoggedIn, (req, res, next) => {
   res.json(req.user);
 });
+
+//  Update user document 
+router.post('/profile/update', isLoggedIn, (req, res, next) => {
+  console.log(req.body)
+  User.findByIdAndUpdate(req.body._user, {_currentlyEditing: req.body._playlist, _activePlaylists: req.body._playlist}, {new: true})
+    .then(userUpdated => {
+      res.json(userUpdated)
+    })
+    .catch(err => {
+      res.json({ message: 'Error updating User'})
+    })
+})
 
 // Add playlist to db
 router.post("/createplaylist/create", (req, res, next) => {
@@ -27,12 +40,11 @@ router.post("/createplaylist/create", (req, res, next) => {
   })
     .then(playlistCreated => {
       console.log('TCL: playlistCreated', playlistCreated)
-      res.json({})
+      res.json(playlistCreated)
   })
-.catch(err => {
-  console.log(err)
-  res.json({ message: "error."})
-});
+    .catch(err => {
+      res.json({ message: "Error updating playlist."})
+    });
 })
 
 // Add song to db
@@ -47,8 +59,17 @@ router.post("/songsearch/add", (req, res, next) => {
   })
     .then(songCreated => {
       console.log('TCL: songCreated', songCreated)
+      Playlist.findByIdAndUpdate(req.body.userCurrentlyEditing, {_songs: songCreated._id}, {new: true})  
+      .then(playlistUpdated => {
+				console.log('TCL: playlistUpdated', playlistUpdated)
       })
-    .catch(err => console.log(err));
+      .catch(err => {
+        res.json({ message: 'Error updating playlist.'})
+      })  
+    })
+    .catch(err => {
+      res.json({ message: 'Error adding song to database.'})
+    })  
 })
 
 router.post('/playlist', isLoggedIn, (req, res, next) => {

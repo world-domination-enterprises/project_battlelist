@@ -118,7 +118,7 @@ router.get(
   passport.authenticate("spotify", {
     failureRedirect: "/",
     failureMessage: true,
-    successRedirect: "http://localhost:3000/createplaylist",
+    successRedirect: "http://localhost:3000/",
     successMessage: true
   }),
   (req, res, next) => {
