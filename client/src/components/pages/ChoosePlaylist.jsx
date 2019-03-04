@@ -13,7 +13,8 @@ export default class ChoosePlaylist extends Component {
       start: null,
       end: null,
       numberOfSongs: 0,
-      isActive: false
+      isActive: false,
+      activePlaylists: [],
     }
   }
 
@@ -50,8 +51,15 @@ export default class ChoosePlaylist extends Component {
   joinPlaylist() {
     api.joinPlaylist({
       playlistCode: this.state.playlistCode,
-      _playlistEditor: this.state._playlistEditor
+      _playlistEditor: this.state._playlistEditor,
     })
+  }
+  editPlaylist() {
+    if (this.state.activePlaylists.length > 1) {
+      console.log('several playlists detected, choose one!')
+    } else {
+      console.log('only one active, lets work with that one!')
+    }
   }
 
   componentDidMount(){
@@ -60,7 +68,8 @@ export default class ChoosePlaylist extends Component {
         console.log('TCL: ChoosePlaylist -> componentDidMount -> user', user)
         this.setState({
           _playlistCreator: user._id,
-          _playlistEditor: user._id
+          _playlistEditor: user._id,
+          activePlaylists: user._activePlaylists
         })
       })
   }
@@ -89,7 +98,7 @@ export default class ChoosePlaylist extends Component {
 
         <button className="btn btn-primary mx-auto" onClick={() => this.joinPlaylist()}>Join playlist</button>
         
-        <button className="btn btn-primary m-3 mx-auto">Edit playlist</button>
+        <button className="btn btn-primary m-3 mx-auto" onClick={() => this.editPlaylist()}>Edit playlist</button>
 
         </div>
       </div>

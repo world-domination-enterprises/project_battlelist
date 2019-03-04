@@ -7,6 +7,13 @@ const User = require('../models/User')
 const Playlist = require("../models/Playlist");
 
 
+router.get('/secret', isLoggedIn, (req, res, next) => {
+  res.json({
+    secret: 42,
+    user: req.user
+  });
+});
+
 //  Get the users profile
 router.get('/profile', isLoggedIn, (req, res, next) => {
   res.json(req.user);
@@ -52,7 +59,7 @@ router.post("/songsearch/add", (req, res, next) => {
     imgUrl: req.body.imgUrl
   })
     .then(songCreated => {
-      console.log('TCL: songCreated', songCreated, req.body.userCurrentlyEditing)
+      console.log('TCL: songCreated', songCreated)
       Playlist.findByIdAndUpdate(req.body.userCurrentlyEditing, {_songs: songCreated._id}, {new: true})  
       .then(playlistUpdated => {
 				console.log('TCL: playlistUpdated', playlistUpdated)

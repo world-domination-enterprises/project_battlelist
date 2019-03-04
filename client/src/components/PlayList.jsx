@@ -35,7 +35,7 @@ export default class PlayList extends Component {
     //  TODO: function to 
     //         1. split the songs in the PL into those containng the user's _id and the rest
     //         2. push the two sections into the appropriate arrays
-  }, 1000);
+  }, 500);
   }
   render() {
     return (
