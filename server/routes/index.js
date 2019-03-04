@@ -7,13 +7,6 @@ const User = require('../models/User')
 const Playlist = require("../models/Playlist");
 
 
-router.get('/secret', isLoggedIn, (req, res, next) => {
-  res.json({
-    secret: 42,
-    user: req.user
-  });
-});
-
 //  Get the users profile
 router.get('/profile', isLoggedIn, (req, res, next) => {
   res.json(req.user);
