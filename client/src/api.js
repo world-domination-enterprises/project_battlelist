@@ -109,9 +109,11 @@ export default {
     console.log('api called with following data ', data)
     return service
       .post('/songsearch/add', data)
-      .then(res => res.data)
+      .then(res => {
+        return res.data})
       .catch(errHandler)
   },
+
   addPlaylist(data) {
     console.log('api called with following data ', data)
 
@@ -122,6 +124,7 @@ export default {
       })
       .catch(errHandler)
   },
+  
   fetchSongs(data) {
     console.log('fetchsongs called with following data ', data)
     return service

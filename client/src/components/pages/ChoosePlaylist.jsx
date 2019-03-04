@@ -69,7 +69,10 @@ export default class ChoosePlaylist extends Component {
         this.setState({
           _playlistCreator: user._id,
           _playlistEditor: user._id,
+<<<<<<< HEAD
           activePlaylists: user._activePlaylists
+=======
+>>>>>>> d1e9723310a5677862f6176ee9b090078e9c61de
         })
       })
   }

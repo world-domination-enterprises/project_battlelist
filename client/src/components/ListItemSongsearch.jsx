@@ -17,9 +17,11 @@ export default class ListItemSongsearch extends Component {
       name: this.props.title,
       songId: this.props.songId,
       releaseDate: this.props.rlsDate,
-      imgUrl: this.props.img
+      imgUrl: this.props.img,
+      _PLtoAddSongTo: this.state.userCurrentlyEditing,
     })
-    .then(user => console.log(user))
+    .then(playlistUpdated =>
+		console.log('TCL: ListItemSongsearch -> addSong -> playlistUpdated', playlistUpdated))
   }
 
   componentDidMount() {

@@ -50,19 +50,20 @@ router.post("/createplaylist/create", (req, res, next) => {
 
 // Add song to db
 router.post("/songsearch/add", (req, res, next) => {
-  Song.create({
-    artist: req.body.artist,
-    name: req.body.name,
-    genres: 'testing',
-    year: req.body.releaseDate,
-    songId: req.body.songId,
-    imgUrl: req.body.imgUrl
-  })
+    Song.create({
+      artist: req.body.artist,
+      name: req.body.name,
+      genres: 'testing',
+      year: req.body.releaseDate,
+      songId: req.body.songId,
+      imgUrl: req.body.imgUrl
+    })
     .then(songCreated => {
-      console.log('TCL: songCreated', songCreated)
-      Playlist.findByIdAndUpdate(req.body.userCurrentlyEditing, {_songs: songCreated._id}, {new: true})  
+      console.log('TCL: songCreated', songCreated, req.body._PLtoAddSongTo)
+      Playlist.findByIdAndUpdate(req.body._PLtoAddSongTo, {_songs: songCreated._id}, {new: true})  
       .then(playlistUpdated => {
-				console.log('TCL: playlistUpdated', playlistUpdated)
+        console.log('TCL: playlistUpdated', playlistUpdated)
+        return res.json(playlistUpdated)
       })
       .catch(err => {
         res.json({ message: 'Error updating playlist.'})

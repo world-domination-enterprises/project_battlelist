@@ -3,7 +3,6 @@ import ListItemSongsearch from '../ListItemSongsearch'
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import SpotifyWebApi from 'spotify-web-api-node'
 import api from '../../api';
-import PlayList from '../PlayList'
 
 export default class SongSearch extends Component {
   constructor(props)  {
