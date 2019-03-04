@@ -53,7 +53,7 @@ export default class PlayList extends Component {
                 <ListItemPlaylist title={song.name} artist={song.artist} img={song.imgUrl} songId={song.songId} key={i} />
               ) : console.log('Loading songs from database..') }
             </ul>
-            TEST
+            TEST            
         </div>
       </div>
     )
