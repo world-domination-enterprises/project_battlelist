@@ -60,7 +60,7 @@ export default class ChoosePlaylist extends Component {
         console.log('TCL: ChoosePlaylist -> componentDidMount -> user', user)
         this.setState({
           _playlistCreator: user._id,
-          _playlistEditor: user._id
+          _playlistEditor: user._id,
         })
       })
   }
