@@ -61,7 +61,6 @@ export default class SongSearch extends Component {
     render() {  
       return (
         <div className='SongSearch'>
-        <div className="search">
        <h1>Search for Songs</h1>   
         <Form onSubmit={(e) => this.handleSubmit(e)} >
           <FormGroup>
@@ -72,8 +71,6 @@ export default class SongSearch extends Component {
         {this.state.results.map((song, i) => 
          <ListItemSongsearch title={song.name} artist={song.artists[0].name} img={song.album.images[0].url} key={i} songId={song.id} rlsDate={song.album.release_date}/>
         )}
-        </div>
-        <PlayList />
         </div>
       )
     }

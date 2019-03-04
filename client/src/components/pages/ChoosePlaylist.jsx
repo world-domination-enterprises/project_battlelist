@@ -13,7 +13,7 @@ export default class ChoosePlaylist extends Component {
       start: null,
       end: null,
       numberOfSongs: 0,
-      isActive: false,
+      isActive: false
     }
   }
 

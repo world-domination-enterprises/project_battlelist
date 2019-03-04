@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import SongSearch from './SongSearch'
+import PlayList from '../PlayList'
 
 export default class CreatePlayList extends Component {
   constructor (props) {
@@ -10,8 +11,9 @@ export default class CreatePlayList extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="search-pl-container">
         <SongSearch />
+        <PlayList />
       </div>
     )
   }

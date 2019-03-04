@@ -1,6 +1,7 @@
 const express = require('express');
 const { isLoggedIn } = require('../middlewares')
 const router = express.Router();
+const mongoose = require('mongoose')
 const Song = require("../models/Song");
 const User = require('../models/User')
 const Playlist = require("../models/Playlist");
@@ -51,7 +52,7 @@ router.post("/songsearch/add", (req, res, next) => {
     imgUrl: req.body.imgUrl
   })
     .then(songCreated => {
-      console.log('TCL: songCreated', songCreated)
+      console.log('TCL: songCreated', songCreated, req.body.userCurrentlyEditing)
       Playlist.findByIdAndUpdate(req.body.userCurrentlyEditing, {_songs: songCreated._id}, {new: true})  
       .then(playlistUpdated => {
 				console.log('TCL: playlistUpdated', playlistUpdated)
@@ -73,7 +74,18 @@ router.post('/playlist', isLoggedIn, (req, res, next) => {
       })
     .catch(err => console.log(err))  
 })
-
+// Get songs from db
+router.post('/fetchsongs', (req, res, next) => { 
+  Playlist.findById(req.body.playlistId)
+  .select('_songs')
+  .populate('_songs')
+  .exec()
+  .then(data => {
+  // console.log('BRAH', data)
+  res.json(data)
+})
+.catch(err => console.log(err))  
+})
 
 
 module.exports = router;

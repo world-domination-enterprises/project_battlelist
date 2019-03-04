@@ -12,7 +12,6 @@ export default class ListItemSongsearch extends Component {
   }
 
   addSong() {
-    console.log('frontend called')
     api.postSong({
       artist: this.props.artist,
       name: this.props.title,

@@ -64,10 +64,12 @@ body {
   height: 200px;
   width: 200px;
 }
-.SongSearch {
+
+.search-pl-container {
   display: flex;
 }
-.search, .playlist {
+
+.SongSearch, .pl-container {
   border: 1px solid;
   width: 50%;
 }
