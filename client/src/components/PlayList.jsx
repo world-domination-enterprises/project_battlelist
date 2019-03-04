@@ -8,38 +8,50 @@ export default class PlayList extends Component {
     super(props)
     this.state = {
       userSelectedSongs: [],
-      songsInPlaylist: ['3ssX20QT5c3nA9wk78V1LQ']
+      songsInPlaylist: [],
+      songsMetaData: null,
+      currentlyEditing: ''
     }
   }
 
   componentDidMount() {
-      console.log('getSongInfo() called')
-      api.fetchSongs({
-        spotifyId: this.state.songsInPlaylist
+    api.getProfile()
+    .then(user => {
+      this.setState({
+        currentlyEditing: user._currentlyEditing
       })
-      .then(user => console.log(user))
+    })
+    setTimeout(() => {
+      api.fetchSongs({
+        playlistId: this.state.currentlyEditing
+      })
+      .then(user => {
+        this.setState({
+          songsMetaData: user._songs,
+        })
+        console.log('SONGS METADATA :', this.state.songsMetaData)
+      })
     //  TODO: api-call on backend to get playlist document from the database; use currentlyEditing property in user document to get the current PL
     //  TODO: function to 
     //         1. split the songs in the PL into those containng the user's _id and the rest
     //         2. push the two sections into the appropriate arrays
-
+  }, 1000);
   }
-
   render() {
     return (
       <div className="pl-container">
         <div className="userSongs">
             <ul>
               {this.state.userSelectedSongs.map((song, i) => 
-                <UserSelectedSongs title={song.title} artist={song.artist} img={song} songId={song.id} key={i} />
+                <UserSelectedSongs title={song.name} artist={song.artist} img={song.imgUrl} songId={song.id} key={i} />
               )}
             </ul>
         </div>
         <div className="playlist">
             <ul>
-              {this.state.songsInPlaylist.map((song, i) => 
-                <ListItemPlaylist title={song.title} artist={song.artist} img={song} songId={song.id} key={i} />
-              )}
+              {this.state.songsMetaData ? this.state.songsMetaData.map((song, i) => 
+                <ListItemPlaylist title={song.name} artist={song.artist} img={song.imgUrl} songId={song.songId} key={i} />
+              ) : console.log('Loading songs from database..') }
             </ul>
             TEST
         </div>

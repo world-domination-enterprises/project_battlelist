@@ -5,9 +5,12 @@ import api from '../api';
 export default class ListItemSongsearch extends Component {
     constructor(props) {
     super(props)
-
+    this.state = {
+      userCurrentlyEditing: null
+    }
     this.addSong = this.addSong.bind(this);
   }
+
   addSong() {
     api.postSong({
       artist: this.props.artist,
@@ -18,6 +21,17 @@ export default class ListItemSongsearch extends Component {
     })
     .then(user => console.log(user))
   }
+
+  componentDidMount() {
+    api.getProfile()
+      .then(user => {
+				console.log('TCL: ListItemSongsearch -> componentDidMount -> user', user)
+        this.setState({
+          userCurrentlyEditing: user._currentlyEditing
+        })
+      })
+    }
+
 render() {
   return (
      <Row>
