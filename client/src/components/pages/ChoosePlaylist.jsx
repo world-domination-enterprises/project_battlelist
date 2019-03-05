@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import api from '../../api';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
+import CreatePlaylist from '../CreatePlaylist';
+
 
 export default class ChoosePlaylist extends Component {
   constructor (props) {
@@ -10,15 +12,26 @@ export default class ChoosePlaylist extends Component {
       playlistCode: '',
       _playlistCreator: null,
       _playlistEditor: null,
+      inviteUserEmails: [],
       start: null,
       end: null,
       numberOfSongs: 0,
-      isActive: false
+      isActive: false,
+      renderCreate: false,
+      renderJoin: false,
+      renderEdit: false,
     }
   }
 
   handleSubmit(e) {
     e.preventDefault()
+  }
+
+  toggleRender(stateFieldName, e) {
+    this.setState({
+      [stateFieldName]: !this.state[stateFieldName]
+    })
+    console.log('DEBUG: toggleRender fired: ', this.state[stateFieldName])
   }
 
   handleInputChange(stateFieldName, event) {
@@ -70,15 +83,9 @@ export default class ChoosePlaylist extends Component {
         <div className="col-12 main-page-container d-flex flex-column align-self-center mx-auto">
         <h1 className="main-h1 text-center">CHOOSE:</h1>
         <p className="sub-p text-center">Join the party or create your own</p>
+        <button className="btn btn-primary mx-auto btn-fixed-width" onClick={(e) => this.toggleRender("renderCreate", e)}>Create Playlist</button>
 
-        <Form onSubmit={(e) => this.handleSubmit(e)}>
-          <FormGroup>
-            <Label for="name-entry" className="mt-2">Name your playlist:</Label>
-            <Input type="text" name="name-entry" id="name-entry" placeholder="New playlist" className="col-4 mx-auto" onChange={(e) => this.handleInputChange("playlistName", e)}/>
-          </FormGroup>
-        </Form>
-
-        <button className="btn btn-primary mx-auto" onClick={() => this.addPlaylist()}>Create playlist</button>
+        {this.state.renderCreate && <CreatePlaylist />}
 
         <Form onSubmit={(e) => this.handleSubmit(e)}>
           <FormGroup>
@@ -87,9 +94,9 @@ export default class ChoosePlaylist extends Component {
           </FormGroup>
         </Form>
 
-        <button className="btn btn-primary mx-auto" onClick={() => this.joinPlaylist()}>Join playlist</button>
+        <button className="btn btn-primary mx-auto btn-fixed-width" onClick={(e) => this.joinPlaylist()}>Join playlist</button>
         
-        <button className="btn btn-primary m-3 mx-auto">Edit playlist</button>
+        <button className="btn btn-primary m-3 mx-auto btn-fixed-width">Edit playlist</button>
 
         </div>
       </div>
