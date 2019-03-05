@@ -12,6 +12,7 @@ export default class PlayList extends Component {
       songsMetaData: null,
       currentlyEditing: '',
       currentlyEditingName: '',
+      refreshComponent: this.props.refreshPlaylist
     }
   }
   componentDidMount() {
@@ -20,8 +21,10 @@ export default class PlayList extends Component {
       this.setState({
         currentlyEditing: user._currentlyEditing
       })
+    this.refreshPlaylist()  
     })
-    setTimeout(() => {
+  }
+  refreshPlaylist () {
       api.fetchSongs({
         playlistId: this.state.currentlyEditing
       })
@@ -31,15 +34,16 @@ export default class PlayList extends Component {
           currentlyEditingName: user.name,
         })
       })
-    //  TODO: api-call on backend to get playlist document from the database; use currentlyEditing property in user document to get the current PL
-    //  TODO: function to 
-    //         1. split the songs in the PL into those containng the user's _id and the rest
-    //         2. push the two sections into the appropriate arrays
-  }, 500);
   }
-  deleteSong () {
-    
-    console.log('deleteItem triggered')
+  deleteSong (songId, playlistId) {
+    console.log('deleteSong() triggered')
+    console.log(songId, playlistId)
+    api.deleteSong({
+      songId: songId,
+      playlistId: playlistId,
+    })
+    .then(res => console.log(res))
+    this.refreshPlaylist()
   }
   render() {
     return (
@@ -52,13 +56,12 @@ export default class PlayList extends Component {
             </ul>
         </div>
         <div className="playlist">
-        <h3 className="text-center">Currently editing: <strong>{this.state.currentlyEditingName}</strong></h3>
+        <h4 className="text-center m-4">Currently editing: <strong>{this.state.currentlyEditingName}</strong></h4>
             <ul>
               {this.state.songsMetaData ? this.state.songsMetaData.map((song, i) => 
-                <ListItemPlaylist title={song.name} artist={song.artist} img={song.imgUrl} songId={song.songId} key={i} deleteItem={() => this.deleteSong()}/>
+                <ListItemPlaylist title={song.name} artist={song.artist} img={song.imgUrl} songId={song.songId} key={i} deleteItem={() => this.deleteSong(song._id, this.state.currentlyEditing)}/>
               ) : console.log('Loading songs from database..') }
-            </ul>
-            TEST            
+            </ul>        
         </div>
       </div>
     )

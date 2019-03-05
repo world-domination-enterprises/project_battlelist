@@ -134,7 +134,6 @@ export default {
   },
   
   fetchSongs(data) {
-    console.log('fetchsongs called with following data ', data)
     return service
       .post('/fetchsongs', data)
       .then(res => res.data)

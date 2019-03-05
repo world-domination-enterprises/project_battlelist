@@ -89,11 +89,10 @@ router.post('/fetchsongs', (req, res, next) => {
 
 // Delete song from playlist
 router.post('/playlist/deleteItem', (req, res, next) => { 
-  Playlist.findById(req.body.playlistId)
-  .populate('_songs')
-  .exec()
+  Playlist.findByIdAndUpdate({_id: req.body.playlistId}, 
+  { $pull: {_songs: req.body.songId}})
   .then(data => {
-  // console.log('BRAH', data)
+  console.log('Itemdeleted', data)
   res.json(data)
 })
 .catch(err => console.log(err))  

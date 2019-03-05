@@ -6,7 +6,8 @@ export default class ListItemSongsearch extends Component {
     constructor(props) {
     super(props)
     this.state = {
-      userCurrentlyEditing: null
+      userCurrentlyEditing: null,
+      testing: false,
     }
     this.addSong = this.addSong.bind(this);
   }
@@ -20,10 +21,11 @@ export default class ListItemSongsearch extends Component {
       imgUrl: this.props.img,
       _PLtoAddSongTo: this.state.userCurrentlyEditing,
     })
-    .then(playlistUpdated =>
-    console.log('TCL: ListItemSongsearch -> addSong -> playlistUpdated', playlistUpdated))
-  }
-
+    .then(playlistUpdated => {
+    console.log('TCL: ListItemSongsearch -> addSong -> playlistUpdated', playlistUpdated)
+    this.props.refreshList()
+  })
+}
   componentDidMount() {
     api.getProfile()
       .then(user => {

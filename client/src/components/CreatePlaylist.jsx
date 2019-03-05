@@ -77,7 +77,7 @@ export default class createplaylist extends Component {
     })
     .then(playlistAdded => {
 			console.log('TCL: ChoosePlaylist -> addPlaylist -> playlistAdded', playlistAdded)
-      this.props.history.push("/createplaylist")
+      this.props.history.push("/editplaylist")
       api.updateUser(this.state._playlistCreator, playlistAdded._id)
       .then(res => {
         console.log('TCL: ChoosePlaylist -> addPlaylist -> userUpdated', res)
