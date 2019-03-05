@@ -38,6 +38,7 @@ export default class PlayList extends Component {
   }, 500);
   }
   deleteSong () {
+    
     console.log('deleteItem triggered')
   }
   render() {

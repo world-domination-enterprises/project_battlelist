@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import api from '../../api';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
+import CreatePlaylist from '../CreatePlaylist';
+
 
 export default class ChoosePlaylist extends Component {
   constructor (props) {
@@ -10,18 +12,29 @@ export default class ChoosePlaylist extends Component {
       playlistCode: '',
       _playlistCreator: null,
       _playlistEditor: null,
+      inviteUserEmails: [],
       start: null,
       end: null,
       numberOfSongs: 0,
       isActive: false,
-      activePlaylists: [],
+      renderCreate: false,
+      renderJoin: false,
+      renderEdit: false,
+      _activePlaylists: [],
       activePlaylistsMetaData: null,
-      userId: '',
+      _userId: '',
     }
   }
 
   handleSubmit(e) {
     e.preventDefault()
+  }
+
+  toggleRender(stateFieldName, e) {
+    this.setState({
+      [stateFieldName]: !this.state[stateFieldName]
+    })
+    console.log('DEBUG: toggleRender fired: ', this.state[stateFieldName])
   }
 
   handleInputChange(stateFieldName, event) {
@@ -58,7 +71,7 @@ export default class ChoosePlaylist extends Component {
   }
   editPlaylist() {
       api.getPlaylist({
-        userId: this.state.userId
+        _userId: this.state._userId
       })
       .then(res => {
         this.setState({
@@ -67,7 +80,7 @@ export default class ChoosePlaylist extends Component {
       })
   }
   setCurrentlyEditing (e){
-    api.updateUser(this.state.userId, e.target.id)
+    api.updateUser(this.state._userId, e.target.id)
   .then(res => {
     this.props.history.push("/createplaylist")
   })
@@ -79,8 +92,8 @@ export default class ChoosePlaylist extends Component {
         this.setState({
           _playlistCreator: user._id,
           _playlistEditor: user._id,
-          activePlaylists: user._activePlaylists,
-          userId: user._id
+          _activePlaylists: user._activePlaylists,
+          _userId: user._id
         })
       })
   }
@@ -90,15 +103,9 @@ export default class ChoosePlaylist extends Component {
         <div className="col-12 main-page-container d-flex flex-column align-self-center mx-auto">
         <h1 className="main-h1 text-center">CHOOSE:</h1>
         <p className="sub-p text-center">Join the party or create your own</p>
+        <button className="btn btn-primary mx-auto btn-fixed-width" onClick={(e) => this.toggleRender("renderCreate", e)}>Create Playlist</button>
 
-        <Form onSubmit={(e) => this.handleSubmit(e)}>
-          <FormGroup>
-            <Label for="name-entry" className="mt-2">Name your playlist:</Label>
-            <Input type="text" name="name-entry" id="name-entry" placeholder="New playlist" className="col-4 mx-auto" onChange={(e) => this.handleInputChange("playlistName", e)}/>
-          </FormGroup>
-        </Form>
-
-        <button className="btn btn-primary mx-auto" onClick={() => this.addPlaylist()}>Create playlist</button>
+        {this.state.renderCreate && <CreatePlaylist />}
 
         <Form onSubmit={(e) => this.handleSubmit(e)}>
           <FormGroup>
@@ -107,9 +114,10 @@ export default class ChoosePlaylist extends Component {
           </FormGroup>
         </Form>
 
-        <button className="btn btn-primary mx-auto" onClick={() => this.joinPlaylist()}>Join playlist</button>
+        <button className="btn btn-primary mx-auto btn-fixed-width" onClick={(e) => this.joinPlaylist()}>Join playlist</button>
         
-        <button className="btn btn-primary m-3 mx-auto" onClick={() => this.editPlaylist()}>Edit playlist</button>
+        
+        <button className="btn btn-primary m-3 mx-auto btn-fixed-width" onClick={() => this.editPlaylist()}>Edit playlist</button>
         <ul>
           {this.state.activePlaylistsMetaData ? this.state.activePlaylistsMetaData.map((playlist, i) =>
             <li key={i} data={playlist._id} id={playlist._id} onClick={(e) => this.setCurrentlyEditing(e)}>{playlist.name}</li>
