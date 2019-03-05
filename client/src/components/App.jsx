@@ -3,7 +3,6 @@ import { Route, Link, NavLink, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import LoginCallback from './pages/LoginCallback';
 import api from '../api';
-import Profile from './pages/Profile';
 import CreatePlayList from './pages/CreatePlayList';
 import ChoosePlaylist from './pages/ChoosePlaylist';
 

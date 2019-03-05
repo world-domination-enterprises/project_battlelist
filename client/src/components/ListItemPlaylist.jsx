@@ -9,6 +9,7 @@ export default function ListItemPlaylist(props) {
             <CardTitle><strong>{props.title} </strong>by {props.artist}</CardTitle>
             <CardText><img src={props.img} alt="album-cover-art" className="cover-art"/></CardText>
             <iframe title='track-preview' src={`https://open.spotify.com/embed/track/${props.songId}`} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <button className="btn btn-danger" onClick={props.deleteItem}>X</button>
           </Card>
         </Col>
         </Row>
