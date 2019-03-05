@@ -79,10 +79,10 @@ export default class ChoosePlaylist extends Component {
         })
       })
   }
-  setCurrentlyEditing (e){
-    api.updateUser(this.state._userId, e.target.id)
+  setCurrentlyEditing (id){
+    api.updateUser(this.state._userId, id)
   .then(res => {
-    this.props.history.push("/editplaylist")
+    this.props.history.push("/playlist/"+id)
   })
 }
   componentDidMount(){
@@ -120,7 +120,7 @@ export default class ChoosePlaylist extends Component {
         <button className="btn btn-primary m-3 mx-auto btn-fixed-width" onClick={() => this.editPlaylist()}>Edit playlist</button>
         <ul>
           {this.state.activePlaylistsMetaData ? this.state.activePlaylistsMetaData.map((playlist, i) =>
-            <li key={i} data={playlist._id} id={playlist._id} onClick={(e) => this.setCurrentlyEditing(e)}>{playlist.name}</li>
+            <li key={i} onClick={(e) => this.setCurrentlyEditing(playlist._id)}>{playlist.name}</li>
           ) : console.log('waiting for user input')}
         </ul>
 

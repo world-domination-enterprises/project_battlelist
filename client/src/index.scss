@@ -59,9 +59,7 @@ ul {
     }
   }
 }
-.container {
-  height: 500px;
-}
+
 .cover-art {
   height: 200px;
   width: 200px;
@@ -69,6 +67,11 @@ ul {
 
 .search-pl-container {
   display: flex;
+}
+
+.scroll-y {
+  height: calc(100vh - 120px);
+  overflow-y: scroll;
 }
 
 .SongSearch, .pl-container {

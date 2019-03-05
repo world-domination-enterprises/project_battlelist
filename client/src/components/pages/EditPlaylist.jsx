@@ -4,6 +4,7 @@ import ListItemPlaylist from '../ListItemPlaylist';
 import UserSelectedSongs from '../UserSelectedSongs';
 import SpotifyWebApi from 'spotify-web-api-node'
 import api from '../../api';
+import { Container } from 'reactstrap';
 
 
 export default class EditPlayList extends Component {
@@ -133,38 +134,40 @@ export default class EditPlayList extends Component {
   render() {
     return (
       <div className="search-pl-container">
-        <SongSearch 
-          value={this.state.searchString} 
+        <SongSearch
+          value={this.state.searchString}
           onSearchChange={this.handleSearchChange}
           spotifySearch={this.getSongsfromSpotify}
           searchResults={this.state.searchResults}
           playlistId={this.props.match.playlistId}
-          triggerSongAdd={this.addSong} 
+          triggerSongAdd={this.addSong}
         />
-        
-        <div className="pl-container">
+
+        <div className="pl-container scroll-y">
+          <Container>
           <div className="userSongs">
-              <ul>
-                {this.state._userSelectedSongs.map((song, i) => 
-                  <UserSelectedSongs title={song.name} artist={song.artist} img=  {song.imgUrl} songId={song.id} key={i} />
-                )}
-              </ul>
+            <ul>
+              {this.state._userSelectedSongs.map((song, i) =>
+                <UserSelectedSongs title={song.name} artist={song.artist} img={song.imgUrl} songId={song.id} key={i} />
+              )}
+            </ul>
           </div>
 
           <div className="playlist">
             <h4 className="text-center m-4">Currently editing: <strong>{this.state.currentlyEditingName}</strong></h4>
-                <ul>
-                  {this.state.songsMetaData ? this.state.songsMetaData.map((song, i)  => 
-                    <ListItemPlaylist 
-                      title={song.name} 
-                      artist={song.artist} 
-                      img={song.imgUrl} 
-                      songId={song.songId} 
-                      key={i} 
-                      onDeleteItem={() => this.deleteSong(song._id)}/>
-                    ) : console.log('Loading songs from database..') }
-                </ul>        
+            <ul>
+              {this.state.songsMetaData ? this.state.songsMetaData.map((song, i) =>
+                <ListItemPlaylist
+                  title={song.name}
+                  artist={song.artist}
+                  img={song.imgUrl}
+                  songId={song.songId}
+                  key={i}
+                  onDeleteItem={() => this.deleteSong(song._id)} />
+              ) : console.log('Loading songs from database..')}
+            </ul>
           </div>
+          </Container>
         </div>
 
       </div>

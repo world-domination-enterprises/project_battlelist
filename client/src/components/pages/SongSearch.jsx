@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ListItemSongsearch from '../ListItemSongsearch'
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Container } from 'reactstrap';
 
 export default class SongSearch extends Component {
   constructor(props)  {
@@ -34,7 +34,9 @@ export default class SongSearch extends Component {
 
     render() {  
       return (
-        <div className='SongSearch'>
+        <div className='SongSearch scroll-y'>
+        <Container>
+
        <h1>Search for Songs</h1>   
         <Form onSubmit={(e) => this.handleSubmit(e)} >
           <FormGroup>
@@ -64,6 +66,7 @@ export default class SongSearch extends Component {
           songId={song.id} 
           rlsDate={song.album.release_date}/>
         )}
+        </Container>
         </div>
       )
     }
