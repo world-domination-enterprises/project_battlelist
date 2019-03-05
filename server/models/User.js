@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Playlist = require('./Playlist')
 
 const userSchema = new Schema({
   username: String,

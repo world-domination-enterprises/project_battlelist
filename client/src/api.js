@@ -95,9 +95,9 @@ export default {
       .catch(errHandler);
   }, 
 
-  getPlaylist(_playlist) {
+  getPlaylist(data) {
     return service 
-      .post ('/playlist', _playlist)
+      .post ('/playlist', data)
       .then(res => {
         localStorage.setItem('playlist', JSON.stringify(res.data));
         return res.data

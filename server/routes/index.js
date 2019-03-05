@@ -1,11 +1,9 @@
 const express = require('express');
 const { isLoggedIn } = require('../middlewares')
 const router = express.Router();
-const mongoose = require('mongoose')
 const Song = require("../models/Song");
 const User = require('../models/User')
 const Playlist = require("../models/Playlist");
-
 
 //  Get the users profile
 router.get('/profile', isLoggedIn, (req, res, next) => {
@@ -14,8 +12,7 @@ router.get('/profile', isLoggedIn, (req, res, next) => {
 
 //  Update user document 
 router.post('/profile/update', isLoggedIn, (req, res, next) => {
-  console.log(req.body)
-  User.findByIdAndUpdate(req.body._user, {_currentlyEditing: req.body._playlist, _activePlaylists: req.body._playlist}, {new: true})
+  User.findByIdAndUpdate(req.body._user, { $set: { _currentlyEditing: req.body._playlist }, $addToSet: { _activePlaylists: req.body._playlist }}, {new: true, runValidators:true})
     .then(userUpdated => {
       res.json(userUpdated)
     })
@@ -23,7 +20,6 @@ router.post('/profile/update', isLoggedIn, (req, res, next) => {
       res.json({ message: 'Error updating User'})
     })
 })
-
 // Add playlist to db
 router.post("/createplaylist/create", (req, res, next) => {
   Playlist.create({
@@ -66,12 +62,15 @@ router.post("/songsearch/add", (req, res, next) => {
       res.json({ message: 'Error adding song to database.'})
     })  
 })
-
+// Get active playlists
 router.post('/playlist', isLoggedIn, (req, res, next) => {
-  console.log('Sending playlistId: ', req.body)
-  Playlist.findById(req.body)
-    .then(playlist => {
-			console.log('TCL: Playlist data retrieved ', playlist)
+  User.findById(req.body.userId)
+  .select('_activePlaylists')
+  .populate('_activePlaylists')
+  .exec()
+  .then(playlist => {
+      console.log('TCL: Playlist data retrieved ', playlist)
+      res.json(playlist)
       })
     .catch(err => console.log(err))  
 })

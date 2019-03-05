@@ -35,7 +35,7 @@ export default class PlayList extends Component {
     //  TODO: function to 
     //         1. split the songs in the PL into those containng the user's _id and the rest
     //         2. push the two sections into the appropriate arrays
-  }, 1000);
+  }, 500);
   }
   render() {
     return (
@@ -53,7 +53,7 @@ export default class PlayList extends Component {
                 <ListItemPlaylist title={song.name} artist={song.artist} img={song.imgUrl} songId={song.songId} key={i} />
               ) : console.log('Loading songs from database..') }
             </ul>
-            TEST
+            TEST            
         </div>
       </div>
     )

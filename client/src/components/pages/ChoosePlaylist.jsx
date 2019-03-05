@@ -20,6 +20,9 @@ export default class ChoosePlaylist extends Component {
       renderCreate: false,
       renderJoin: false,
       renderEdit: false,
+      _activePlaylists: [],
+      activePlaylistsMetaData: null,
+      _userId: '',
     }
   }
 
@@ -50,10 +53,10 @@ export default class ChoosePlaylist extends Component {
     })
     .then(playlistAdded => {
 			console.log('TCL: ChoosePlaylist -> addPlaylist -> playlistAdded', playlistAdded)
-      this.props.history.push("/createplaylist")
       api.updateUser(this.state._playlistCreator, playlistAdded._id)
       .then(res => {
         console.log('TCL: ChoosePlaylist -> addPlaylist -> userUpdated', res)
+        this.props.history.push("/createplaylist")
         })
       .catch(err => console.log(err)) 
       })
@@ -63,10 +66,25 @@ export default class ChoosePlaylist extends Component {
   joinPlaylist() {
     api.joinPlaylist({
       playlistCode: this.state.playlistCode,
-      _playlistEditor: this.state._playlistEditor
+      _playlistEditor: this.state._playlistEditor,
     })
   }
-
+  editPlaylist() {
+      api.getPlaylist({
+        _userId: this.state._userId
+      })
+      .then(res => {
+        this.setState({
+          activePlaylistsMetaData: res._activePlaylists
+        })
+      })
+  }
+  setCurrentlyEditing (e){
+    api.updateUser(this.state._userId, e.target.id)
+  .then(res => {
+    this.props.history.push("/createplaylist")
+  })
+}
   componentDidMount(){
     api.getProfile()
       .then(user => {
@@ -74,6 +92,8 @@ export default class ChoosePlaylist extends Component {
         this.setState({
           _playlistCreator: user._id,
           _playlistEditor: user._id,
+          _activePlaylists: user._activePlaylists,
+          _userId: user._id
         })
       })
   }
@@ -96,8 +116,15 @@ export default class ChoosePlaylist extends Component {
 
         <button className="btn btn-primary mx-auto btn-fixed-width" onClick={(e) => this.joinPlaylist()}>Join playlist</button>
         
-        <button className="btn btn-primary m-3 mx-auto btn-fixed-width">Edit playlist</button>
+        
+        <button className="btn btn-primary m-3 mx-auto btn-fixed-width" onClick={() => this.editPlaylist()}>Edit playlist</button>
+        <ul>
+          {this.state.activePlaylistsMetaData ? this.state.activePlaylistsMetaData.map((playlist, i) =>
+            <li key={i} data={playlist._id} id={playlist._id} onClick={(e) => this.setCurrentlyEditing(e)}>{playlist.name}</li>
+          ) : console.log('waiting for user input')}
+        </ul>
 
+        
         </div>
       </div>
     )
