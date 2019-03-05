@@ -56,7 +56,7 @@ export default class ChoosePlaylist extends Component {
       api.updateUser(this.state._playlistCreator, playlistAdded._id)
       .then(res => {
         console.log('TCL: ChoosePlaylist -> addPlaylist -> userUpdated', res)
-        this.props.history.push("/createplaylist")
+        this.props.history.push("/editplaylist")
         })
       .catch(err => console.log(err)) 
       })
@@ -82,7 +82,7 @@ export default class ChoosePlaylist extends Component {
   setCurrentlyEditing (e){
     api.updateUser(this.state._userId, e.target.id)
   .then(res => {
-    this.props.history.push("/createplaylist")
+    this.props.history.push("/editplaylist")
   })
 }
   componentDidMount(){

@@ -60,7 +60,7 @@ export default class SongSearch extends Component {
     render() {  
       return (
         <div className='SongSearch'>
-       <h1>Search for Songs</h1>   
+       <h1 onClick={this.props.refreshPlaylist}>Search for Songs</h1>   
         <Form onSubmit={(e) => this.handleSubmit(e)} >
           <FormGroup>
             <Label for="song">Song</Label>
@@ -68,7 +68,7 @@ export default class SongSearch extends Component {
           </FormGroup>
         </Form>
         {this.state.results.map((song, i) => 
-         <ListItemSongsearch title={song.name} artist={song.artists[0].name} img={song.album.images[0].url} key={i} songId={song.id} rlsDate={song.album.release_date}/>
+         <ListItemSongsearch refreshList={this.props.refreshPlaylist} title={song.name} artist={song.artists[0].name} img={song.album.images[0].url} key={i} songId={song.id} rlsDate={song.album.release_date}/>
         )}
         </div>
       )

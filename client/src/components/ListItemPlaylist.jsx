@@ -1,15 +1,14 @@
 import React from 'react';
-import { Card, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 export default function ListItemPlaylist(props) {
     return (
        <Row>
-        <Col sm="6">
-          <Card body>
-            <CardTitle><strong>{props.title} </strong>by {props.artist}</CardTitle>
-            <CardText><img src={props.img} alt="album-cover-art" className="cover-art"/></CardText>
-            <iframe title='track-preview' src={`https://open.spotify.com/embed/track/${props.songId}`} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-          </Card>
+        <Col sm="12">
+            <div className="iframe-wrapper d-flex justify-content-center pl-4 pr-4 pb-2">
+            <iframe title='track-preview' src={`https://open.spotify.com/embed/track/${props.songId}`} width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <button className="btn btn-danger" onClick={props.deleteItem}>X</button>
+            </div>
         </Col>
         </Row>
     )

@@ -113,6 +113,14 @@ export default {
         return res.data})
       .catch(errHandler)
   },
+  deleteSong(data) {
+    console.log('api called with following data ', data)
+    return service
+      .post('/playlist/deleteItem', data)
+      .then(res => {
+        return res.data})
+      .catch(errHandler)
+  },
 
   addPlaylist(data) {
     console.log('api called with following data ', data)
@@ -126,7 +134,6 @@ export default {
   },
   
   fetchSongs(data) {
-    console.log('fetchsongs called with following data ', data)
     return service
       .post('/fetchsongs', data)
       .then(res => res.data)
