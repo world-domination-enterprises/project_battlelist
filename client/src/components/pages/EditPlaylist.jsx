@@ -27,7 +27,7 @@ export default class CreatePlayList extends Component {
   render() {
     return (
       <div className="search-pl-container">
-        <SongSearch refreshPlaylist={this.refreshPl()}/>
+        <SongSearch />
         <PlayList refreshPlaylist={this.state.refresh}/>
       </div>
     )
