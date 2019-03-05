@@ -40,7 +40,7 @@ export default class createplaylist extends Component {
   }
 
   handleClick(stateFieldName, e) {
-    console.log(e.target.form)
+    console.log('triggered handleClick')
     switch(stateFieldName) {
       case 'inviteUserEmails':
         this.state.emailInputText 
@@ -50,7 +50,9 @@ export default class createplaylist extends Component {
             return {inviteUserEmails: helperArray}
             })
           : this.setState({
-            emailInputError: 'Must enter Email address',
+            emailInputError: 'No Email entered. Please try again.'})
+          this.setState({
+          emailInputText: ''
           })
         break;
 
@@ -66,6 +68,13 @@ export default class createplaylist extends Component {
       //  TODO: move this to create Button; it should only be set once the playlist is created
       // isActive: !this.state.isActive || true,
     })
+  }
+
+  turnOffError(stateErrorFieldName, timeOut) {
+    setTimeout(() => {
+      this.setState({
+        [stateErrorFieldName]: ''
+      })}, timeOut)
   }
 
   addPlaylist() {
@@ -94,7 +103,7 @@ export default class createplaylist extends Component {
     })
   }
 
-  componentDidMount(){
+  componentDidMount() {
     api.getProfile()
       .then(user => {
         console.log('TCL: ChoosePlaylist -> componentDidMount -> user', user)
@@ -103,6 +112,14 @@ export default class createplaylist extends Component {
           _playlistEditor: user._id,
         })
       })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.state.emailInputError && this.turnOffError('emailInputError', 2000)
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.turnOffError())
   }
 
   render() {
@@ -116,16 +133,16 @@ export default class createplaylist extends Component {
           </FormGroup>
 
           <FormGroup>
-          <Label for="name-entry" className="mt-2">Invite others:</Label> <br/>
-          <small>Your playlist will have {this.state['inviteUserEmails'].length + 1} users.</small>
+          <Label for="name-entry" className="mt-2">Invite your friends:</Label> <br/>
+          <small>You and {this.state['inviteUserEmails'].length} friend{this.state['inviteUserEmails'].length !== 1 && 's'} will edit the playlist.</small>
             <InputGroup className='email-input'>
-              <Input type="email" name="invite-user-email" id="invite-user-email-input" placeholder="Enter user's email" value='' onChange={(e) => this.handleInputChange('emailInputText', e)}/>
+              <Input type="email" name="invite-user-email" id="invite-user-email-input" placeholder="Enter user's email" value={this.state.emailInputText} onChange={(e) => this.handleInputChange('emailInputText', e)}/>
               <InputGroupAddon addonType="append">
                {/* Button should only send text input to  */}
                <Button className="btn btn-primary submit-email" form='invite-user-email-input' type='button' onClick={(e) => this.handleClick('inviteUserEmails', e)}>+</Button>
               </InputGroupAddon>
             </InputGroup>
-            {this.state.emailInputError && <small>{this.state.emailInputError}</small>}
+            {this.state.emailInputError && <small className='error'>{this.state.emailInputError}</small>}
         </FormGroup>
 
         {this.state.inviteUserEmails && <InviteUserEmails emails={this.state.inviteUserEmails} />}
