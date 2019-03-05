@@ -75,13 +75,13 @@ router.post('/playlist', isLoggedIn, (req, res, next) => {
       })
     .catch(err => console.log(err))  
 })
+
 // Get songs from db
 router.post('/fetchsongs', (req, res, next) => { 
-  Playlist.findById(req.body.playlistId)
+  Playlist.findById(req.body._playlistId)
   .populate('_songs')
   .exec()
   .then(data => {
-  // console.log('BRAH', data)
   res.json(data)
 })
 .catch(err => console.log(err))  
@@ -89,8 +89,8 @@ router.post('/fetchsongs', (req, res, next) => {
 
 // Delete song from playlist
 router.post('/playlist/deleteItem', (req, res, next) => { 
-  Playlist.findByIdAndUpdate({_id: req.body.playlistId}, 
-  { $pull: {_songs: req.body.songId}})
+  Playlist.findByIdAndUpdate({_id: req.body._playlistId}, 
+  { $pull: {_songs: req.body._songId}})
   .then(data => {
   console.log('Itemdeleted', data)
   res.json(data)

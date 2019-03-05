@@ -7,14 +7,15 @@ export default class PlayList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userSelectedSongs: [],
-      songsInPlaylist: [],
-      songsMetaData: null,
-      currentlyEditing: '',
-      currentlyEditingName: '',
-      refreshComponent: this.props.refreshPlaylist
+      _userSelectedSongs: [], //  TODO: LIFTED del
+      _songsInPlaylist: [], //  TODO: LIFTED del
+      songsMetaData: null, //  TODO: LIFTED del
+      currentlyEditing: '', //  TODO: del; not necessary lifting, alread there
+      currentlyEditingName: '', //  TODO: LIFTED del
     }
   }
+
+  //  LIFTED --- TODO: del
   componentDidMount() {
     api.getProfile()
     .then(user => {
@@ -24,33 +25,42 @@ export default class PlayList extends Component {
     this.refreshPlaylist()  
     })
   }
+  //  LIFTED --- TODO: del
+
+  //  LIFTED --- TODO: del
   refreshPlaylist () {
       api.fetchSongs({
         playlistId: this.state.currentlyEditing
       })
-      .then(user => {
+      .then(playlist => {
         this.setState({
-          songsMetaData: user._songs,
-          currentlyEditingName: user.name,
+          songsMetaData: playlist._songs,
+          currentlyEditingName: playlist.name,
         })
       })
   }
+  //  LIFTED --- TODO: del
+
+// TODO: LIFT
+// TODO:  Has to trigger change in state to make component rerender
   deleteSong (songId, playlistId) {
     console.log('deleteSong() triggered')
     console.log(songId, playlistId)
     api.deleteSong({
-      songId: songId,
-      playlistId: playlistId,
+      _songId: songId,
+      _playlistId: playlistId,
     })
     .then(res => console.log(res))
-    this.refreshPlaylist()
   }
+  // TODO: LIFT
+
+  //  LIFTED ----- TODO: del
   render() {
     return (
       <div className="pl-container">
         <div className="userSongs">
             <ul>
-              {this.state.userSelectedSongs.map((song, i) => 
+              {this.state._userSelectedSongs.map((song, i) => 
                 <UserSelectedSongs title={song.name} artist={song.artist} img={song.imgUrl} songId={song.id} key={i} />
               )}
             </ul>
@@ -67,3 +77,4 @@ export default class PlayList extends Component {
     )
   }
 }
+//  LIFTED ----- TODO: del

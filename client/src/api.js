@@ -113,6 +113,7 @@ export default {
         return res.data})
       .catch(errHandler)
   },
+  
   deleteSong(data) {
     console.log('api called with following data ', data)
     return service
