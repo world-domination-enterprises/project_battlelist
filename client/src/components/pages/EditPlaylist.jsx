@@ -6,14 +6,13 @@ import SpotifyWebApi from 'spotify-web-api-node'
 import api from '../../api';
 
 
-export default class CreatePlayList extends Component {
+export default class EditPlayList extends Component {
   constructor (props) {
     super(props)
     this.state = {
       accessToken: '',
       searchString: '',
       searchResults: [],
-      _userCurrentlyEditing: null,
       currentlyEditingName: '', //  LIFTED
       _userSelectedSongs: [], //  LIFTED
       _songsInPlaylist: [], //  LIFTED
@@ -22,6 +21,7 @@ export default class CreatePlayList extends Component {
     this.addSong = this.addSong.bind(this); //  TODO: is this necessary?
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.getSongsfromSpotify = this.getSongsfromSpotify.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
   //  LIFTED
@@ -41,19 +41,21 @@ export default class CreatePlayList extends Component {
 
   addSong(key) {
     let song = this.state.searchResults[key]
+		console.log('TCL: CreatePlayList -> addSong -> song', song)
 
     api.postSong({
-      artist: song.artist,
-      name: song.title,
-      songId: song.songId,
-      releaseDate: song.rlsDate,
-      imgUrl: song.img,
-      _PLtoAddSongTo: song._userCurrentlyEditing,
+      artist: song.artists[0].name,
+      name: song.name,
+      songId: song.id,
+      releaseDate: song.album.release_date,
+      imgUrl: song.album.images[0].url,
+      _PLtoAddSongTo: this.props.match.params.playlistId,
     })
-    .then(playlistUpdated => {
-    console.log('TCL: ListItemSongsearch -> addSong -> playlistUpdated', playlistUpdated)
-  })
-}
+      .then(playlistUpdated => {
+        console.log('TCL: ListItemSongsearch -> addSong -> playlistUpdated', playlistUpdated)
+        this.fetchPlaylistSongs()
+      })
+  }
 
   //  LIFTED
   handleSearchChange(searchString) {
@@ -68,44 +70,64 @@ export default class CreatePlayList extends Component {
     console.log(_songId)
     api.deleteSong({
       _songId: _songId,
-      _playlistId: this.state._userCurrentlyEditing,
+      _playlistId: this.props.match.params.playlistId,
     })
-    .then(res => console.log(res))
+    .then(res =>{ 
+      console.log(res)
+      // // Method 1, efficient, but could be problematic if multiple persons are working on the same playlist at the same time
+      // this.setState({
+      //   songsMetaData: this.state.songsMetaData.filter(songMetaData => songMetaData._id !== _songId)
+      // })
+
+      // Method 2, get the current songsMetaData
+      this.fetchPlaylistSongs()
+    })
   }
 
   componentDidMount() {
     //  API: Refresh spotify access token and get it to run Spotify-API calls
     api.refreshAndFetchAccessToken()
-    .then(data => {
-      console.log('TCL: refreshAndFetchAccessToken', data)
-      this.setState({
-        accessToken: data.body.access_token,
-      })
-    })
-    
-    //  API: Get user data from database
-    api.getProfile()
-      .then(user => {
-				console.log('TCL: ListItemSongsearch -> componentDidMount -> user', user)
+      .then(data => {
+        console.log('TCL: refreshAndFetchAccessToken', data)
         this.setState({
-          _userCurrentlyEditing: user._currentlyEditing
-        })
-        api.fetchSongs({
-          _playlistId: this.state._userCurrentlyEditing
-        })
-        .then(playlist => {
-          console.log('TCL: CreatePlayList -> componentDidMount -> playlist', playlist)
-          this.setState({
-            songsMetaData: playlist._songs,
-            currentlyEditingName: playlist.name,
-          })
+          accessToken: data.body.access_token,
         })
       })
-    }
-  //   setTimeout(() => {
-  //     //  API: Get songdata from playlist currently being edited  
-      
-  //   }, 500)  
+    this.fetchPlaylistSongs()
+
+    //  API: Get user data from database
+    // api.getProfile()
+    //   .then(user => {
+    // 		console.log('TCL: ListItemSongsearch -> componentDidMount -> user', user)
+    //     this.setState({
+    //       _userCurrentlyEditing: user._currentlyEditing
+    //     })
+    //     api.fetchSongs({
+    //       _playlistId: this.state._userCurrentlyEditing
+    //     })
+    //     .then(playlist => {
+    //       console.log('TCL: CreatePlayList -> componentDidMount -> playlist', playlist)
+    //       this.setState({
+    //         songsMetaData: playlist._songs,
+    //         currentlyEditingName: playlist.name,
+    //       })
+    //     })
+    //   })
+    
+  } 
+
+  fetchPlaylistSongs() {
+    api.fetchSongs({
+      _playlistId: this.props.match.params.playlistId // the value of the id in the url
+    })
+      .then(playlist => {
+        console.log('TCL: CreatePlayList -> componentDidMount -> playlist', playlist)
+        this.setState({
+          songsMetaData: playlist._songs,
+          currentlyEditingName: playlist.name,
+        })
+      })
+  }
 
 
   render() {
@@ -116,7 +138,7 @@ export default class CreatePlayList extends Component {
           onSearchChange={this.handleSearchChange}
           spotifySearch={this.getSongsfromSpotify}
           searchResults={this.state.searchResults}
-          _userCurrentlyEditing={this.state._userCurrentlyEditing}
+          playlistId={this.props.match.playlistId}
           triggerSongAdd={this.addSong} 
         />
         
@@ -139,7 +161,7 @@ export default class CreatePlayList extends Component {
                       img={song.imgUrl} 
                       songId={song.songId} 
                       key={i} 
-                      deleteItem={() => this.deleteSong(song._id)}/>
+                      onDeleteItem={() => this.deleteSong(song._id)}/>
                     ) : console.log('Loading songs from database..') }
                 </ul>        
           </div>

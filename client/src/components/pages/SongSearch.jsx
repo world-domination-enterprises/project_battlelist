@@ -45,6 +45,7 @@ export default class SongSearch extends Component {
               value={this.props.value} 
               id="song" 
               placeholder="Enter Song Title" 
+              autoComplete="off"
               onChange={(e) => this.props.onSearchChange(e.target.value)} 
               onKeyUp={(e) => this.handleKeyUp(e)} 
               onKeyDown={(e) => this.handleKeyDown(e)} 
@@ -53,12 +54,13 @@ export default class SongSearch extends Component {
         </Form>
         {this.props.searchResults.map((song, i) => 
          <ListItemSongsearch 
-          _userCurrentlyEditing={this.props._userCurrentlyEditing}
+          _userCurrentlyEditing={this.props.playlistId}
           triggerSongAdd={this.props.triggerSongAdd}
           title={song.name} 
           artist={song.artists[0].name} 
           img={song.album.images[0].url} 
-          key={i} 
+          key={i}
+          mykey={i} 
           songId={song.id} 
           rlsDate={song.album.release_date}/>
         )}

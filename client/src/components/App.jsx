@@ -31,7 +31,7 @@ class App extends Component {
         </header>
         <Switch>
           <Route path="/" exact component={ChoosePlaylist} />
-          <Route path='/editplaylist' component={EditPlaylist} />
+          <Route path='/playlist/:playlistId' component={EditPlaylist} />
           <Route path="/login" component={Login} />
           <Route path='/login/callback' component={LoginCallback} />}
           <Route render={() => <h2>404</h2>} />

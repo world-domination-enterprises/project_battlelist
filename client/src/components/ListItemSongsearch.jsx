@@ -19,7 +19,7 @@ export default function ListItemSongsearch (props) {
             frameBorder="0" 
             allowtransparency="true" 
             allow="encrypted-media"></iframe>
-          <Button onClick={() => props.triggerSongAdd(props.key)} >Add +</Button>
+          <Button onClick={() => props.triggerSongAdd(props.mykey)} >Add +</Button>
         </Card>
       </Col>
     </Row>

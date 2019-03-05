@@ -56,10 +56,12 @@ router.post("/songsearch/add", (req, res, next) => {
         return res.json(playlistUpdated)
       })
       .catch(err => {
-        res.json({ message: 'Error updating playlist.'})
+        console.log("adding songsearch add", err)
+        res.json({ message: 'Error updating playlist.' })
       })  
     })
     .catch(err => {
+      console.log("adding songsearch add", err)
       res.json({ message: 'Error adding song to database.'})
     })  
 })
