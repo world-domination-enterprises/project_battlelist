@@ -7,7 +7,7 @@ export default class SongSearch extends Component {
     super(props)
     this.state = {
       typingTimeout: 0, 
-      error: ''
+      error: '',
     }
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);

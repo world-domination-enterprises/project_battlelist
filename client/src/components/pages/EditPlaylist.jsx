@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import SongSearch from './SongSearch'
 import ListItemPlaylist from '../ListItemPlaylist';
 import UserSelectedSongs from '../UserSelectedSongs';
-import SpotifyWebApi from 'spotify-web-api-node'
 import spotifyApi from '../../spotifyApi'
 import api from '../../api';
 import { Container } from 'reactstrap';
@@ -133,8 +132,6 @@ export default class EditPlayList extends Component {
         })
       })
   }
-
-
   render() {
     if (!api.isLoggedIn()) {
       api.saveLastPlaylistVisited(this.props.match.params.playlistId)

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import api from '../../api';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
 import CreatePlaylist from '../CreatePlaylist';
-
 
 export default class ChoosePlaylist extends Component {
   constructor (props) {
@@ -21,7 +19,6 @@ export default class ChoosePlaylist extends Component {
       renderJoin: false,
       renderEdit: false,
       _activePlaylists: [],
-      activePlaylistsMetaData: null,
       _userId: '',
     }
   }
@@ -74,6 +71,7 @@ export default class ChoosePlaylist extends Component {
         _userId: this.state._userId
       })
       .then(res => {
+        console.log('asfgdshf', res)
         this.setState({
           activePlaylistsMetaData: res._activePlaylists
         })
@@ -99,32 +97,12 @@ export default class ChoosePlaylist extends Component {
   }
   render() {
     return (
-      <div className="container row w-100 mx-auto">
+      <div className="container row col-12 choose-playlist-container m-0 p-0">
         <div className="col-12 main-page-container d-flex flex-column align-self-center mx-auto">
-        <h1 className="main-h1 text-center">CHOOSE:</h1>
         <p className="sub-p text-center">Join the party or create your own</p>
-        <button className="btn btn-primary mx-auto btn-fixed-width" onClick={(e) => this.toggleRender("renderCreate", e)}>Create Playlist</button>
+        <button className="btn btn-success mx-auto btn-fixed-width" onClick={(e) => this.toggleRender("renderCreate", e)}>Create Playlist</button>
 
-        {this.state.renderCreate && <CreatePlaylist />}
-
-        <Form onSubmit={(e) => this.handleSubmit(e)}>
-          <FormGroup>
-            <Label for="name-entry" className="mt-2">Enter Playlist Code:</Label>
-            <Input type="text" name="code-entry" id="code-entry" placeholder="Join playlist" className="col-4 mx-auto" onChange={(e) => this.handleInputChange("playlistCode", e)}/>
-          </FormGroup>
-        </Form>
-
-        <button className="btn btn-primary mx-auto btn-fixed-width" onClick={(e) => this.joinPlaylist()}>Join playlist</button>
-        
-        
-        <button className="btn btn-primary m-3 mx-auto btn-fixed-width" onClick={() => this.editPlaylist()}>Edit playlist</button>
-        <ul>
-          {this.state.activePlaylistsMetaData ? this.state.activePlaylistsMetaData.map((playlist, i) =>
-            <li key={i} onClick={(e) => this.setCurrentlyEditing(playlist._id)}>{playlist.name}</li>
-          ) : console.log('waiting for user input')}
-        </ul>
-
-        
+        {this.state.renderCreate && <CreatePlaylist />}      
         </div>
       </div>
     )

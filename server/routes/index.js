@@ -68,7 +68,7 @@ router.post("/songsearch/add", (req, res, next) => {
     })  
 })
 // Get active playlists
-router.post('/playlists', isLoggedIn, (req, res, next) => {
+router.post('/getplaylists', isLoggedIn, (req, res, next) => {
   User.findById(req.body._userId)
   .select('_activePlaylists')
   .populate('_activePlaylists')

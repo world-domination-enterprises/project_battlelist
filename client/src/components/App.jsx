@@ -6,7 +6,7 @@ import api from '../api';
 import ChoosePlaylist from './pages/ChoosePlaylist';
 import SuccessLogin from './pages/SuccessLogin';
 import EditPlaylist from './pages/EditPlaylist';
-
+import YourPlaylists from './pages/YourPlaylists';
 
 class App extends Component {
   handleLogoutClick(e) {
@@ -16,12 +16,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Battlelist</h1>
+        <header className="App-header d-flex justify-content-between p-0">
+        <div className="logo-wrapper">
+          <h1 className="App-title m-0">LISTR.</h1>
+          <p className="m-0 logo-p">Join the party or create your own</p>
+          </div>
+          <div class="nav-wrapper align-self-center mr-2">
           <NavLink exact to="/" >Create a playlist</NavLink>
           {api.isLoggedIn() && <NavLink exact to="/your-playlists">Your Playlists</NavLink>}
           {!api.isLoggedIn() && <NavLink to="/login">Login</NavLink>}
           {api.isLoggedIn() && <Link to="/" onClick={(e) => this.handleLogoutClick(e)}>Logout</Link>}
+          </div>
         </header>
         <Switch>
           <Route path="/" exact component={ChoosePlaylist} />
@@ -29,6 +34,8 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path='/login/callback' component={LoginCallback} />}
           <Route path='/success-login' component={SuccessLogin} />}
+          <Route path='/your-playlists' component={YourPlaylists} />}
+
           <Route render={() => <h2>404</h2>} />
         </Switch>
       </div>

@@ -1,7 +1,7 @@
 // --------------------
 // Definition of variables
 $primary: #121212;
-
+$secondary: #282828;
 
 // ----------------------------------------
 // To install Boostrap:
@@ -17,6 +17,7 @@ html {
   height: 100%;
 }
 body {
+  background: $primary;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -40,8 +41,21 @@ ul {
 
 // --------------------
 // Style for App component
+.App-title {
+  font-size: 52px;
+  letter-spacing: .25em;
+  padding-left: 14px;
+}
+.logo-wrapper {
+  margin: 0 0 0 10px;
+}
 .App {
   text-align: center;
+
+  .logo-p {
+    font-size: 13px;
+    letter-spacing: .02em;
+  }
 
   .App-header {
     background-color: $primary;
@@ -62,6 +76,7 @@ ul {
 // --------------------
 // Style for playlist and song search component
 .cover-art {
+  cursor: pointer;
   height: 80px;
   width: 80px;
 }
@@ -75,12 +90,12 @@ ul {
   display: flex;
 }
 .scroll-y {
-  height: calc(100vh - 100px);
-  overflow-y: scroll;
+  height: calc(100vh - 82px);
+  overflow-y: auto;
 }
 .SongSearch, .pl-container {
   scrollbar-color: #282828 #121212;
-  -webkit-scrollbar:  #282828 #121212;
+  -webkit-scrollbar: #282828 #121212;
   background: #121212;
   color: #fff;
   width: 50%;
@@ -90,6 +105,16 @@ ul {
 }
 .btn-fixed-width {
   width: 150px;
+}
+// Style for your playlists component
+.your-playlist-container, .choose-playlist-container {
+  background: #121212;
+  color: #fff;
+  height: calc(100vh - 82px);
+  overflow-x: hidden;
+}
+.edit-playlist-item {
+  background: $secondary;
 }
 // --------------------
 // Style for Home component
