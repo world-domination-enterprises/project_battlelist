@@ -3,6 +3,7 @@ import SongSearch from './SongSearch'
 import ListItemPlaylist from '../ListItemPlaylist';
 import UserSelectedSongs from '../UserSelectedSongs';
 import SpotifyWebApi from 'spotify-web-api-node'
+import spotifyApi from '../../spotifyApi'
 import api from '../../api';
 import { Container } from 'reactstrap';
 import{ Redirect } from 'react-router-dom'
@@ -27,18 +28,26 @@ export default class EditPlayList extends Component {
 
   //  LIFTED
   getSongsfromSpotify() {
-    const spotifyApi = new SpotifyWebApi()
-  
-    spotifyApi.setAccessToken(this.state.accessToken);
-    spotifyApi.searchTracks(this.state.searchString, {limit: 10,})
-      .then(data => {
-        JSON.stringify(data, null, 2)
-        console.log('TCL: SongSearch -> handleKeyUp -> data', data)
-        this.setState({
-        searchResults: data.body.tracks.items
-        })
+    spotifyApi.searchTracks(this.state.searchString, { limit: 10, })
+    .then(items => {
+      this.setState({
+        searchResults: items
       })
-    }
+    })
+
+
+    // const spotifyApi = new SpotifyWebApi()
+
+    // spotifyApi.setAccessToken(this.state.accessToken);
+    // spotifyApi.searchTracks(this.state.searchString, { limit: 10, })
+    //   .then(data => {
+    //     JSON.stringify(data, null, 2)
+    //     console.log('TCL: SongSearch -> handleKeyUp -> data', data)
+    //     this.setState({
+    //       searchResults: data.body.tracks.items
+    //     })
+    //   })
+  }
 
   addSong(key) {
     let song = this.state.searchResults[key]
@@ -84,13 +93,13 @@ export default class EditPlayList extends Component {
 
   componentDidMount() {
     //  API: Refresh spotify access token and get it to run Spotify-API calls
-    api.refreshAndFetchAccessToken()
-      .then(data => {
-        console.log('TCL: refreshAndFetchAccessToken', data)
-        this.setState({
-          accessToken: data.body.access_token,
-        })
-      })
+    // api.refreshAndFetchAccessToken()
+    //   .then(data => {
+    //     console.log('TCL: refreshAndFetchAccessToken', data)
+    //     this.setState({
+    //       accessToken: data.body.access_token,
+    //     })
+    //   })
     this.fetchPlaylistSongs()
 
     //  API: Get user data from database
