@@ -16,7 +16,7 @@ const SongSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  songId: String,
+  songId: String, // TODO: rename it to spotifyId
   imgUrl: String
 })
 

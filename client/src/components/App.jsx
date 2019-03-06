@@ -4,17 +4,11 @@ import Login from './pages/Login';
 import LoginCallback from './pages/LoginCallback';
 import api from '../api';
 import ChoosePlaylist from './pages/ChoosePlaylist';
+import SuccessLogin from './pages/SuccessLogin';
 import EditPlaylist from './pages/EditPlaylist';
 
-class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      countries: []
-    }
-    // api.loadUser();
-  }
 
+class App extends Component {
   handleLogoutClick(e) {
     api.logout()
   }
@@ -24,8 +18,8 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Battlelist</h1>
-          <NavLink exact to="/" >Choose your playlist</NavLink>
-          {api.isLoggedIn() && <NavLink exact to="/profile" >Profile</NavLink>}
+          <NavLink exact to="/" >Create a playlist</NavLink>
+          {api.isLoggedIn() && <NavLink exact to="/your-playlists">Your Playlists</NavLink>}
           {!api.isLoggedIn() && <NavLink to="/login">Login</NavLink>}
           {api.isLoggedIn() && <Link to="/" onClick={(e) => this.handleLogoutClick(e)}>Logout</Link>}
         </header>
@@ -34,6 +28,7 @@ class App extends Component {
           <Route path='/playlist/:playlistId' component={EditPlaylist} />
           <Route path="/login" component={Login} />
           <Route path='/login/callback' component={LoginCallback} />}
+          <Route path='/success-login' component={SuccessLogin} />}
           <Route render={() => <h2>404</h2>} />
         </Switch>
       </div>

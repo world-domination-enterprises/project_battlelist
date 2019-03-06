@@ -23,13 +23,13 @@ export default class SongSearch extends Component {
    }
    this.setState({
     typingTimeout: setTimeout(() => {
-      this.props.spotifySearch()
+      this.props.onSpotifySearch()
       }, 2000) // Timeout before search is executed
     })
   }
 
   handleKeyDown(e) {
-    e.keyCode === 13 && this.props.spotifySearch()
+    e.keyCode === 13 && this.props.onSpotifySearch()
   }
 
     render() {  
@@ -37,10 +37,10 @@ export default class SongSearch extends Component {
         <div className='SongSearch scroll-y'>
         <Container>
 
-       <h1>Search for Songs</h1>   
+       <h1 className="mb-0 mt-3">Search tracks</h1>   
         <Form onSubmit={(e) => this.handleSubmit(e)} >
           <FormGroup>
-            <Label for="song">Song</Label>
+            <Label for="song"></Label>
             <Input 
               type="text" 
               name="song" 
@@ -50,14 +50,14 @@ export default class SongSearch extends Component {
               autoComplete="off"
               onChange={(e) => this.props.onSearchChange(e.target.value)} 
               onKeyUp={(e) => this.handleKeyUp(e)} 
-              onKeyDown={(e) => this.handleKeyDown(e)} 
+              onKeyDown={(e) => this.handleKeyDown(e)}
+              className="w-50 mx-auto" 
             />
           </FormGroup>
         </Form>
         {this.props.searchResults.map((song, i) => 
          <ListItemSongsearch 
-          _userCurrentlyEditing={this.props.playlistId}
-          triggerSongAdd={this.props.triggerSongAdd}
+          onSongAdd={this.props.onSongAdd}
           title={song.name} 
           artist={song.artists[0].name} 
           img={song.album.images[0].url} 

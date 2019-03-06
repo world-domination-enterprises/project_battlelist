@@ -1,6 +1,6 @@
 // --------------------
 // Definition of variables
-$primary: #32c3ff;
+$primary: #121212;
 
 
 // ----------------------------------------
@@ -45,8 +45,8 @@ ul {
 
   .App-header {
     background-color: $primary;
-    padding: 20px;
     color: white;
+    padding: 10px;
 
     a {
       color: white;
@@ -59,24 +59,34 @@ ul {
     }
   }
 }
-
+// --------------------
+// Style for playlist and song search component
 .cover-art {
-  height: 200px;
-  width: 200px;
+  height: 80px;
+  width: 80px;
 }
-
+.list-item-search-container {
+  background: #282828;
+  font-size: 14px;
+  height: 80px;
+  width: 100%;
+}
 .search-pl-container {
   display: flex;
 }
-
 .scroll-y {
-  height: calc(100vh - 120px);
+  height: calc(100vh - 100px);
   overflow-y: scroll;
 }
-
 .SongSearch, .pl-container {
-  border: 1px solid;
+  scrollbar-color: #282828 #121212;
+  -webkit-scrollbar:  #282828 #121212;
+  background: #121212;
+  color: #fff;
   width: 50%;
+}
+.ul {
+  margin-top: 65px;
 }
 .btn-fixed-width {
   width: 150px;

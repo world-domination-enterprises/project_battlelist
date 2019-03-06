@@ -11,7 +11,7 @@ router.get('/profile', isLoggedIn, (req, res, next) => {
 });
 
 //  Update user document 
-router.post('/profile/update', isLoggedIn, (req, res, next) => {
+router.put('/profile', isLoggedIn, (req, res, next) => {
   User.findByIdAndUpdate(req.body._user, { $set: { _currentlyEditing: req.body._playlist }, $addToSet: { _activePlaylists: req.body._playlist }}, {new: true, runValidators:true})
     .then(userUpdated => {
       res.json(userUpdated)
@@ -21,7 +21,7 @@ router.post('/profile/update', isLoggedIn, (req, res, next) => {
     })
 })
 // Add playlist to db
-router.post("/createplaylist/create", (req, res, next) => {
+router.post("/playlists", (req, res, next) => {
   Playlist.create({
     name: req.body.name,
     _users: req.body._users,
@@ -36,6 +36,8 @@ router.post("/createplaylist/create", (req, res, next) => {
       res.json({ message: "Error updating playlist."})
     });
 })
+
+// COMMENTS: the route POST "/playlists/:playlistId/songs" would have been better
 
 // Add song to db
 router.post("/songsearch/add", (req, res, next) => {
@@ -66,7 +68,7 @@ router.post("/songsearch/add", (req, res, next) => {
     })  
 })
 // Get active playlists
-router.post('/playlist', isLoggedIn, (req, res, next) => {
+router.post('/playlists', isLoggedIn, (req, res, next) => {
   User.findById(req.body._userId)
   .select('_activePlaylists')
   .populate('_activePlaylists')
@@ -79,25 +81,24 @@ router.post('/playlist', isLoggedIn, (req, res, next) => {
 })
 
 // Get songs from db
-router.post('/fetchsongs', (req, res, next) => { 
-  Playlist.findById(req.body._playlistId)
-  .populate('_songs')
-  .exec()
-  .then(data => {
-  res.json(data)
-})
-.catch(err => console.log(err))  
+router.get('/playlists/:playlistId', (req, res, next) => {
+  Playlist.findById(req.params.playlistId)
+    .populate('_songs')
+    .then(data => {
+      res.json(data)
+    })
+    .catch(err => console.log(err))
 })
 
 // Delete song from playlist
-router.post('/playlist/deleteItem', (req, res, next) => { 
-  Playlist.findByIdAndUpdate({_id: req.body._playlistId}, 
-  { $pull: {_songs: req.body._songId}})
-  .then(data => {
-  console.log('Itemdeleted', data)
-  res.json(data)
-})
-.catch(err => console.log(err))  
+router.delete('/playlists/:playlistId/songs/:songId', (req, res, next) => {
+  Playlist.findByIdAndUpdate({ _id: req.params.playlistId },
+    { $pull: { _songs: req.params.songId } })
+    .then(data => {
+      console.log('Itemdeleted', data)
+      res.json(data)
+    })
+    .catch(err => console.log(err))
 })
 
 

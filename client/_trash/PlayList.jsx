@@ -29,9 +29,7 @@ export default class PlayList extends Component {
 
   //  LIFTED --- TODO: del
   refreshPlaylist () {
-      api.fetchSongs({
-        playlistId: this.state.currentlyEditing
-      })
+      api.fetchSongs(this.state.currentlyEditing)
       .then(playlist => {
         this.setState({
           songsMetaData: playlist._songs,

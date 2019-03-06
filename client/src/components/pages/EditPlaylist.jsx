@@ -5,7 +5,7 @@ import UserSelectedSongs from '../UserSelectedSongs';
 import SpotifyWebApi from 'spotify-web-api-node'
 import api from '../../api';
 import { Container } from 'reactstrap';
-
+import{ Redirect } from 'react-router-dom'
 
 export default class EditPlayList extends Component {
   constructor (props) {
@@ -66,13 +66,10 @@ export default class EditPlayList extends Component {
   }
 
   //  LIFTED
-  deleteSong (_songId) {
+  deleteSong (songId) {
     console.log('deleteSong() triggered')
-    console.log(_songId)
-    api.deleteSong({
-      _songId: _songId,
-      _playlistId: this.props.match.params.playlistId,
-    })
+    console.log(songId)
+    api.deleteSong(this.props.match.params.playlistId, songId)
     .then(res =>{ 
       console.log(res)
       // // Method 1, efficient, but could be problematic if multiple persons are working on the same playlist at the same time
@@ -118,9 +115,7 @@ export default class EditPlayList extends Component {
   } 
 
   fetchPlaylistSongs() {
-    api.fetchSongs({
-      _playlistId: this.props.match.params.playlistId // the value of the id in the url
-    })
+    api.fetchSongs(this.props.match.params.playlistId)
       .then(playlist => {
         console.log('TCL: CreatePlayList -> componentDidMount -> playlist', playlist)
         this.setState({
@@ -132,15 +127,18 @@ export default class EditPlayList extends Component {
 
 
   render() {
+    if (!api.isLoggedIn()) {
+      api.saveLastPlaylistVisited(this.props.match.params.playlistId)
+      return <Redirect to="/login"/>
+    }
     return (
       <div className="search-pl-container">
         <SongSearch
           value={this.state.searchString}
           onSearchChange={this.handleSearchChange}
-          spotifySearch={this.getSongsfromSpotify}
+          onSpotifySearch={this.getSongsfromSpotify}
           searchResults={this.state.searchResults}
-          playlistId={this.props.match.playlistId}
-          triggerSongAdd={this.addSong}
+          onSongAdd={this.addSong}
         />
 
         <div className="pl-container scroll-y">
@@ -154,8 +152,8 @@ export default class EditPlayList extends Component {
           </div>
 
           <div className="playlist">
-            <h4 className="text-center m-4">Currently editing: <strong>{this.state.currentlyEditingName}</strong></h4>
-            <ul>
+            <h3 className="text-center m-5">Currently editing: <strong>{this.state.currentlyEditingName}</strong></h3>
+            <ul className="ul">
               {this.state.songsMetaData ? this.state.songsMetaData.map((song, i) =>
                 <ListItemPlaylist
                   title={song.name}

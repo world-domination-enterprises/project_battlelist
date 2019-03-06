@@ -3,11 +3,6 @@ const Song = require('../models/Song')
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-  console.log('DEBUG routes/songsearch');
-  next()
-})
-
 // route to search form for songs
 // router.get('/songsearch/:id', (req, res, next) => {
 //   Song.find()

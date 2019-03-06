@@ -50,7 +50,7 @@ export default {
       })
   },
 
-  logout() {
+    logout() {
     localStorage.removeItem('user')
     return service
       .get('/logout')
@@ -77,7 +77,7 @@ export default {
     console.log('api called with following data ', {_user, _playlist})
 
     return service
-      .post('/profile/update', {_user, _playlist})
+      .put('/profile', {_user, _playlist})
       .then(res => {
         localStorage.setItem('user', JSON.stringify(res.data));
         return res.data
@@ -97,7 +97,7 @@ export default {
 
   getPlaylist(data) {
     return service 
-      .post ('/playlist', data)
+      .post ('/playlists', data)
       .then(res => {
         localStorage.setItem('playlist', JSON.stringify(res.data));
         return res.data
@@ -114,10 +114,9 @@ export default {
       .catch(errHandler)
   },
   
-  deleteSong(data) {
-    console.log('api called with following data ', data)
+  deleteSong(playlistId, songId) {
     return service
-      .post('/playlist/deleteItem', data)
+      .delete(`/playlists/${playlistId}/songs/${songId}`)
       .then(res => {
         return res.data})
       .catch(errHandler)
@@ -127,19 +126,35 @@ export default {
     console.log('api called with following data ', data)
 
     return service
-      .post('/createplaylist/create', data)
+      .post('/playlists', data)
       .then(res => {
         return res.data
       })
       .catch(errHandler)
   },
   
-  fetchSongs(data) {
+  fetchSongs(playlistId) {
     return service
-      .post('/fetchsongs', data)
+      .get('/playlists/' + playlistId)
       .then(res => res.data)
       .catch(errHandler)
   },
+
+  
+  getLastPlaylistVisited() {
+    return localStorage.getItem("lastPlaylistVisited")
+  },
+
+  saveLastPlaylistVisited(playlistId) {
+    localStorage.setItem("lastPlaylistVisited", playlistId)
+  },
+
+  removeLastPlaylistVisited() {
+    localStorage.removeItem("lastPlaylistVisited")
+  },
+
+  
+
 
 
 

@@ -13,7 +13,7 @@ const userSchema = new Schema({
   photoUrl: String,
   _activePlaylists: [{type: Schema.Types.ObjectId, ref:'Playlist'}],
   _inactivePlaylists: [{type: Schema.Types.ObjectId, ref:'Playlist'}],
-  _currentlyEditing: {type: Schema.Types.ObjectId, ref:'Playlist'} 
+  _currentlyEditing: {type: Schema.Types.ObjectId, ref:'Playlist'} // TODO: remove
 }, {
     timestamps: {
       createdAt: 'created_at',
