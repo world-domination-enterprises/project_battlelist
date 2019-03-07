@@ -216,11 +216,8 @@ export default class CreatePlaylist extends Component {
           onEmailDelete={this.handleEmailDelete}
           emailInputError={this.state.emailInputError}
           />
-<<<<<<< HEAD
         {/* if ERROR */}
         {this.state.emailInputError && <div className='error'><small> {this.state.emailInputError}</small></div>}
-=======
->>>>>>> 09b3b498c36f6d8084950001021bf05ce878e841
 
         <MaxSongs 
             value={this.state.maxSongsPerUser}
