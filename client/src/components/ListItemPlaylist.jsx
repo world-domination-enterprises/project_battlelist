@@ -33,7 +33,7 @@ export default class ListItemPlaylist extends Component {
             <strong>{this.props.title}</strong>
             <br />{this.props.artist}
             <br /> {this.props.album}</CardTitle>
-            <button className="btn btn-danger" onClick={this.props.onDeleteItem}>&#215;</button>
+            <button className="btn btn-danger pl-4 pr-4" onClick={this.props.onDeleteItem}>&#215;</button>
             </div>
         </Col>
       </Row>

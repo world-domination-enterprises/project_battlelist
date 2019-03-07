@@ -50,15 +50,15 @@ export default class YourPlaylists extends Component {
   render() {
     return (
       <div className="your-playlist-container d-flex jusify-content-center flex-column col-12">
-        <h1 className="mb-5">Your active playlists:</h1>
+        <h2 className="mb-5">Your active playlists:</h2>
          <ul className="list-unstyled">
           {this.state.activePlaylistsMetaData ? this.state.activePlaylistsMetaData.map((playlist, i) =>
             <li className="edit-playlist-item d-flex align-self-left col-6 mx-auto" key={i}>
-            <h4 className="align-self-center">{playlist.name}</h4>
-            <Button className="button btn btn-success m-1" onClick={(e) => this.redirectToPlaylist(playlist._id)}>Edit</Button>
-            {this.state.hostedPlaylists.includes(playlist._id) && <Button className="button btn btn-danger m-1" onClick={() => api.deletePlaylist(playlist._id, this.state._userId)}>Delete</Button>}
+            <h6 className="align-self-center pt-2 pr-2">{playlist.name}</h6>
+            <Button className="button btn btn-success m-1 p-0 align-self-center" onClick={(e) => this.redirectToPlaylist(playlist._id)}>Edit</Button>
+            {this.state.hostedPlaylists.includes(playlist._id) && <Button className="button btn btn-danger m-1 p-0 align-self-center" onClick={() => api.deletePlaylist(playlist._id, this.state._userId)}>Delete</Button>}
             </li>
-          ) : <h2>Loading playlists..</h2>}
+          ) : <h4>Loading playlists..</h4>}
         </ul>
       </div>
     )

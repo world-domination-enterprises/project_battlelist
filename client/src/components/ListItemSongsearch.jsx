@@ -32,7 +32,7 @@ render() {
           <strong>{this.props.title}</strong>
           <br />{this.props.artist}
           <br /> {this.props.album}</CardTitle>
-          <Button className="btn-success pl-3 pr-3" onClick={() => this.props.onSongAdd(this.props.mykey)} >&#43;</Button>
+          <Button className="btn-success pl-4 pr-4" onClick={() => this.props.onSongAdd(this.props.mykey)} >&#43;</Button>
           </div>
       </Col>
     </Row>

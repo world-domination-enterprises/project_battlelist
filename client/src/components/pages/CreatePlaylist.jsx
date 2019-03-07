@@ -191,8 +191,8 @@ export default class CreatePlaylist extends Component {
 
   render() {
     return (
-      <div className='create-playlist-container'>
-
+      <div className='create-playlist-container d-flex justify-content-center'>
+        <div className="create-playlist-wrapper flex-column align-self-center col-12">
         <NamePlaylist
           value={this.state.playlistName}
           onNameSubmit={this.handleSubmit} 
@@ -211,7 +211,6 @@ export default class CreatePlaylist extends Component {
           onAddEmailClick={this.handleClick}
           emailInputError={this.state.emailInputError}
           />
-        {this.state.emailInputError && <div className='error'><small> {this.state.emailInputError}</small></div>}
 
         {/* TODO --- MaxLimit: 
               - which props need to be passed?
@@ -220,7 +219,8 @@ export default class CreatePlaylist extends Component {
         {/* <MaxLimit propsName='' />         */}
         
         {/* BUTTON TO SUBMIT ALL FORM DATA ADDED TO STATE */}
-        <Button className="btn btn-primary mx-auto" onClick={() => this.addPlaylist()}>Create Playlist</Button>
+        <Button className="btn btn-success mx-auto mt-4" onClick={() => this.addPlaylist()}>Create Playlist</Button>
+        </div>
       </div>
     )
   }
