@@ -198,8 +198,8 @@ export default class CreatePlaylist extends Component {
 
   render() {
     return (
-      <div className='create-playlist-container'>
-
+      <div className='create-playlist-container d-flex justify-content-center'>
+        <div className="create-playlist-wrapper flex-column align-self-center col-12">
         <NamePlaylist
           value={this.state.playlistName}
           onNameSubmit={this.handleSubmit} 
@@ -216,8 +216,11 @@ export default class CreatePlaylist extends Component {
           onEmailDelete={this.handleEmailDelete}
           emailInputError={this.state.emailInputError}
           />
+<<<<<<< HEAD
         {/* if ERROR */}
         {this.state.emailInputError && <div className='error'><small> {this.state.emailInputError}</small></div>}
+=======
+>>>>>>> 09b3b498c36f6d8084950001021bf05ce878e841
 
         <MaxSongs 
             value={this.state.maxSongsPerUser}
@@ -227,7 +230,8 @@ export default class CreatePlaylist extends Component {
         {this.state.maxSongsInputError && <div className='error'><small>{this.state.maxSongsInputError}</small></div>}
         
         {/* BUTTON TO SUBMIT ALL FORM DATA ADDED TO STATE */}
-        <Button className="btn btn-primary mx-auto" onClick={() => this.addPlaylist()}>Create Playlist</Button>
+        <Button className="btn btn-success mx-auto mt-4" onClick={() => this.addPlaylist()}>Create Playlist</Button>
+        </div>
       </div>
     )
   }
