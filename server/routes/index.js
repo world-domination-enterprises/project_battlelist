@@ -82,7 +82,6 @@ router.post('/gethostedplaylists', isLoggedIn, (req, res, next) => {
 })
 // Get active playlists
 router.post('/getplaylists', isLoggedIn, (req, res, next) => {
-  console.log("user", req.body._userId)
   User.findById(req.body._userId)
   .populate('_activePlaylists')
   .then(playlist => {
@@ -114,7 +113,7 @@ router.delete('/playlists/:playlistId/songs/:songId', (req, res, next) => {
 })
 
 // Delete playlist
-router.delete('/playlists/delete/prostitueradrovpanna', (req, res, next) => {
+router.delete('/playlists/delete/:playlistId', (req, res, next) => {
   Playlist.findOneAndDelete(req.params.playlistId)
     .then(data => {
       console.log('Playlist deleted: ', data)

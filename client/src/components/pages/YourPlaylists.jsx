@@ -56,7 +56,7 @@ export default class YourPlaylists extends Component {
             <li className="edit-playlist-item d-flex align-self-left col-6 mx-auto" key={i}>
             <h4 className="align-self-center">{playlist.name}</h4>
             <Button className="button btn btn-success m-1" onClick={(e) => this.redirectToPlaylist(playlist._id)}>Edit</Button>
-            {this.state.hostedPlaylists.includes(playlist._id) && <Button className="button btn btn-danger m-1" onClick={() => api.deletePlaylist(playlist._id)}>Delete</Button>}
+            {this.state.hostedPlaylists.includes(playlist._id) && <Button className="button btn btn-danger m-1" onClick={() => api.deletePlaylist(playlist._id, this.state._userId)}>Delete</Button>}
             </li>
           ) : <h2>Loading playlists..</h2>}
         </ul>

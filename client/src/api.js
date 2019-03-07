@@ -123,7 +123,7 @@ export default {
   },
   deletePlaylist(playlistId) {
     return service
-      .delete(`/playlists/delete/prostitueradrovpanna`)
+      .delete(`/playlists/delete/${playlistId}`)
       .then(res => {
         return res.data})
       .catch(errHandler)
