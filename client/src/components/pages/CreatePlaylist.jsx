@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import api from '../../api';
 import NamePlaylist from '../NamePlaylist';
 import InviteUsers from '../InviteUsers';
-// import MaxLimit from 'MaxLimit';
+import MaxSongs from '../MaxSongs';
 import { Button } from 'reactstrap';
 
 export default class CreatePlaylist extends Component {
@@ -18,7 +18,7 @@ export default class CreatePlaylist extends Component {
       start: null,
       end: null,
       numberOfSongs: 0,
-      maxSongs: 0,
+      maxSongsPerUser: '',
       isActive: false,
       _activePlaylists: [],
       _userId: '',
@@ -30,13 +30,13 @@ export default class CreatePlaylist extends Component {
       /*********** ERRORS ************/
       nameInputError: '',
       emailInputError: '',
-      numberInputErrorMessage: '',
-      numberInputError: false,
+      maxSongsInputError: '',
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
+    this.handleEmailDelete = this.handleEmailDelete.bind(this)
   }
 
   // handleSubmit(e) {
@@ -60,10 +60,10 @@ export default class CreatePlaylist extends Component {
     }
   }
 
-  handleClick(stateFieldName, e) {
+  handleClick(action, e, index) {
     console.log('triggered handleClick')
-    switch(stateFieldName) {
-      case 'inviteUserEmails':
+    switch(action) {
+      case 'addEmail':
         this.state.emailInputText 
           ? this.setState(() => {
             let helperArray = this.state.inviteUserEmails
@@ -82,17 +82,19 @@ export default class CreatePlaylist extends Component {
     }
   }
 
+  handleEmailDelete(index) {
+    this.setState((index) => {
+      let helperArray = this.state.inviteUserEmails 
+      let deletedEmail = helperArray.splice(index, 1)
+      console.log('deleted Email: ', deletedEmail)
+      return{inviteUserEmails: helperArray}
+    })
+  }
+
   handleNameChange(userInputName) {  
     this.setState({
         playlistName: userInputName
       })
-  }
-
-  toggleRender(stateFieldName, e) {
-    this.setState({
-      [stateFieldName]: !this.state[stateFieldName]
-    })
-    console.log('DEBUG: toggleRender fired: ', this.state[stateFieldName])
   }
 
   handleInputChange(stateFieldName, e) {
@@ -124,7 +126,7 @@ export default class CreatePlaylist extends Component {
   addPlaylist() {
     /************** ERROR CHECKS **************/
     if(
-      this.state.playlistName 
+      this.state.playlistName && (this.state.maxSongsPerUser > 0) 
     ) 
     //  if no error ---> execute method
     {
@@ -132,7 +134,7 @@ export default class CreatePlaylist extends Component {
         name: this.state.playlistName,
         _users: this.state._playlistCreator,
         _host: this.state._playlistCreator,
-        maxSongs: this.state.maxSongs,
+        maxSongsPerUser: this.state.maxSongsPerUser,
         isActive: true,
       })
       .then(playlistAdded => {
@@ -152,9 +154,14 @@ export default class CreatePlaylist extends Component {
       .catch(err => console.log(err))  
     } 
     //  if error ---> set error message
-    else {
+    else if (!this.state.playlistName && this.state.maxSongsPerUser > 0) {
       this.setState({
         nameInputError: 'Your playlist needs a name.'
+      })
+    }
+    else if (this.state.playlistName && this.state.maxSongsPerUser < 1) {
+      this.setState({
+        maxSongsInputError: 'Cannot have a playlist without songs. Please chose at least one song per User.'
       })
     }
   }
@@ -174,7 +181,7 @@ export default class CreatePlaylist extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     this.state.nameInputError && this.turnOffError('nameInputError', 1500)
-    this.state.emailInputError && this.turnOffError('emailInputError', 1500)
+    this.state.maxSongsInputError && this.turnOffError('maxSongsInputError', 1500)
   }
 
   componentWillUnmount() {
@@ -198,26 +205,26 @@ export default class CreatePlaylist extends Component {
           onNameSubmit={this.handleSubmit} 
           onNameChange={this.handleNameChange}
           />
+        {/* if ERROR */}
         {this.state.nameInputError && <div className='error'><small >{this.state.nameInputError}</small></div>}
 
-        {/* TODO --- InviteUsers: 
-              - which props need to be passed?
-              - propsName 
-          */}
         <InviteUsers 
           inviteUserEmails={this.state.inviteUserEmails} 
           value={this.state.emailInputText}
           onEmailChange={this.handleInputChange}
           onAddEmailClick={this.handleClick}
+          onEmailDelete={this.handleEmailDelete}
           emailInputError={this.state.emailInputError}
           />
+        {/* if ERROR */}
         {this.state.emailInputError && <div className='error'><small> {this.state.emailInputError}</small></div>}
 
-        {/* TODO --- MaxLimit: 
-              - which props need to be passed?
-              - propsName 
-          */}
-        {/* <MaxLimit propsName='' />         */}
+        <MaxSongs 
+            value={this.state.maxSongsPerUser}
+            onMaxSongsChange={this.handleInputChange} 
+          />
+        {/* if ERROR */}
+        {this.state.maxSongsInputError && <div className='error'><small>{this.state.maxSongsInputError}</small></div>}
         
         {/* BUTTON TO SUBMIT ALL FORM DATA ADDED TO STATE */}
         <Button className="btn btn-primary mx-auto" onClick={() => this.addPlaylist()}>Create Playlist</Button>

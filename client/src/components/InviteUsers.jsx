@@ -1,9 +1,31 @@
 import React, { Component } from 'react'
 import { Label, Input, Button, InputGroup, InputGroupAddon } from 'reactstrap'
-// import InviteUserEmailsListItem from './InviteUserEmailsListItem';
+import InviteUserEmailsListItem from './InviteUserEmailsListItem';
 
 
 export default class InviteUsers extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      emailInputError: this.props.emailInputError,
+    }
+  }
+
+  turnOffError(stateErrorFieldName, timeOut) {
+    setTimeout(() => {
+      this.setState({
+        [stateErrorFieldName]: ''
+      })}, timeOut)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.state.emailInputError && this.turnOffError('emailInputError', 1500)
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.turnOffError())
+  }
+
   render() {
     return (
       <div className='invite-users-container'>
@@ -24,16 +46,12 @@ export default class InviteUsers extends Component {
               className="btn btn-primary submit-email"
               form='invite-user-email-input'  
               type='button'
-              onClick={(e) => this.props.onAddEmailClick('inviteUserEmails', e)}>+</Button>
+              onClick={(e) => this.props.onAddEmailClick('addEmail', e)}>+</Button>
             </InputGroupAddon>
           </InputGroup>
-          {this.props.emailInputError && <div className='error'><small> {this.props.emailInputError}</small></div>}
+          {this.state.emailInputError && <div className='error'><small> {this.state.emailInputError}</small></div>}
 
-
-          {/* render InviteUserEmailsListItem to display user emails that were already added to to invite list  */}
-          {/* TODO: propsName
-          {props.propsName.inviteUserEmails && <InviteUserEmailsListItem emails={this.state.inviteUserEmail/>}
-           */}
+          {this.props.inviteUserEmails[0] && <InviteUserEmailsListItem emails={this.props.inviteUserEmails} onEmailDelete={this.props.onEmailDelete}/>}
       </div>
     )
   }

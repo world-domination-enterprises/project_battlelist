@@ -22,7 +22,7 @@ class App extends Component {
           <p className="m-0 logo-p">Join the party or create your own</p>
           </div>
           <div className="nav-wrapper align-self-center mr-2">
-          <NavLink exact to="/" >Create a playlist</NavLink>
+          {api.isLoggedIn() && <NavLink exact to="/" >Create a playlist</NavLink>}
           {api.isLoggedIn() && <NavLink exact to="/your-playlists">Your Playlists</NavLink>}
           {!api.isLoggedIn() && <NavLink to="/login">Login</NavLink>}
           {api.isLoggedIn() && <Link to="/" onClick={(e) => this.handleLogoutClick(e)}>Logout</Link>}
