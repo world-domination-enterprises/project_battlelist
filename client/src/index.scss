@@ -47,7 +47,7 @@ ul {
   padding-left: 14px;
 }
 .logo-wrapper {
-  margin: 0 0 0 10px;
+  margin:0;
 }
 .App {
   text-align: center;
@@ -75,6 +75,9 @@ ul {
 }
 // --------------------
 // Style for playlist and song search component
+.list-item-search-container {
+  animation: fadeIn .1s ease-in-out;
+}
 .cover-art {
   cursor: pointer;
   height: 80px;
@@ -136,10 +139,12 @@ ul {
 }
 
 // --------------------
-// Style for Secret component
-.Secret {
-  .result {
-    font-size: 1.2em;
-    color: $primary;
-  }
+// Style for Create playlist component
+.create-playlist-container {
+}
+// --------------------
+// Animations
+@keyframes fadeIn {
+  0% { opacity: 0;}
+  100% { opacity: 1;}
 }

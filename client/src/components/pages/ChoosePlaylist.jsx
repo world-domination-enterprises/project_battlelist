@@ -40,49 +40,6 @@ export default class ChoosePlaylist extends Component {
       isActive: !this.state.isActive || true,
     })
   }
-
-  addPlaylist() {
-    api.addPlaylist({
-      name: this.state.playlistName,
-      _users: this.state._playlistCreator,
-      _host: this.state._playlistCreator,
-      isActive: this.state.isActive,
-    })
-    .then(playlistAdded => {
-			console.log('TCL: ChoosePlaylist -> addPlaylist -> playlistAdded', playlistAdded)
-      api.updateUser(this.state._playlistCreator, playlistAdded._id)
-      .then(res => {
-        console.log('TCL: ChoosePlaylist -> addPlaylist -> userUpdated', res)
-        this.props.history.push("/editplaylist")
-        })
-      .catch(err => console.log(err)) 
-      })
-    .catch(err => console.log(err))  
-  }
-
-  joinPlaylist() {
-    api.joinPlaylist({
-      playlistCode: this.state.playlistCode,
-      _playlistEditor: this.state._playlistEditor,
-    })
-  }
-  editPlaylist() {
-      api.getPlaylist({
-        _userId: this.state._userId
-      })
-      .then(res => {
-        console.log('asfgdshf', res)
-        this.setState({
-          activePlaylistsMetaData: res._activePlaylists
-        })
-      })
-  }
-  setCurrentlyEditing (id){
-    api.updateUser(this.state._userId, id)
-  .then(res => {
-    this.props.history.push("/playlist/"+id)
-  })
-}
   componentDidMount(){
     api.getProfile()
       .then(user => {
@@ -102,7 +59,7 @@ export default class ChoosePlaylist extends Component {
         <p className="sub-p text-center">Join the party or create your own</p>
         <button className="btn btn-success mx-auto btn-fixed-width" onClick={(e) => this.toggleRender("renderCreate", e)}>Create Playlist</button>
 
-        {this.state.renderCreate && <CreatePlaylist />}      
+        {this.state.renderCreate && <CreatePlaylist history={this.props.history}/>}      
         </div>
       </div>
     )

@@ -58,6 +58,7 @@ export default class EditPlayList extends Component {
       songId: song.id,
       releaseDate: song.album.release_date,
       imgUrl: song.album.images[0].url,
+      album: song.album.name,
       _PLtoAddSongTo: this.props.match.params.playlistId,
     })
       .then(playlistUpdated => {
@@ -158,7 +159,7 @@ export default class EditPlayList extends Component {
           </div>
 
           <div className="playlist">
-            <h3 className="text-center m-5">Currently editing: <strong>{this.state.currentlyEditingName}</strong></h3>
+            <h3 className="text-center m-5 currently">Currently editing: <strong>{this.state.currentlyEditingName}</strong></h3>
             <ul className="ul">
               {this.state.songsMetaData ? this.state.songsMetaData.map((song, i) =>
                 <ListItemPlaylist
@@ -166,6 +167,7 @@ export default class EditPlayList extends Component {
                   artist={song.artist}
                   img={song.imgUrl}
                   songId={song.songId}
+                  album={song.album}
                   key={i}
                   onDeleteItem={() => this.deleteSong(song._id)} />
               ) : console.log('Loading songs from database..')}
