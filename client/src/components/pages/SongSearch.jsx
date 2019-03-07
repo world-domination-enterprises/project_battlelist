@@ -46,7 +46,7 @@ export default class SongSearch extends Component {
               name="song" 
               value={this.props.value} 
               id="song" 
-              placeholder="Enter Song Title" 
+              placeholder="Enter song title" 
               autoComplete="off"
               onChange={(e) => this.props.onSearchChange(e.target.value)} 
               onKeyUp={(e) => this.handleKeyUp(e)} 

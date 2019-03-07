@@ -14,10 +14,10 @@ export default class EditPlayList extends Component {
       accessToken: '',
       searchString: '',
       searchResults: [],
-      currentlyEditingName: '', //  LIFTED
-      _userSelectedSongs: [], //  LIFTED
-      _songsInPlaylist: [], //  LIFTED
-      songsMetaData: null,  //  LIFTED; TODO: use this of just iframes?
+      currentlyEditingName: '', 
+      _userSelectedSongs: [],
+      _songsInPlaylist: [],
+      songsMetaData: null,        // TODO: use this of just iframes?
     }
     this.addSong = this.addSong.bind(this); //  TODO: is this necessary?
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -25,7 +25,6 @@ export default class EditPlayList extends Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
-  //  LIFTED
   getSongsfromSpotify() {
     spotifyApi.searchTracks(this.state.searchString, { limit: 10, })
     .then(items => {
@@ -67,14 +66,12 @@ export default class EditPlayList extends Component {
       })
   }
 
-  //  LIFTED
   handleSearchChange(searchString) {
     this.setState({
       searchString: searchString
     })
   }
 
-  //  LIFTED
   deleteSong (songId) {
     console.log('deleteSong() triggered')
     console.log(songId)
