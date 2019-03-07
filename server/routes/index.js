@@ -70,12 +70,21 @@ router.post("/songsearch/add", (req, res, next) => {
       res.json({ message: 'Error adding song to database.'})
     })  
 })
+// Get hosted playlists
+router.post('/gethostedplaylists', isLoggedIn, (req, res, next) => {
+  console.log('wtf mate: ', req.body.userId)
+  Playlist.find({ "_host": req.body.userId})
+  .then(playlist => {
+      console.log('TCL: Playlist data retrieved', playlist)
+      res.json(playlist)
+      })
+    .catch(err => console.log(err))  
+})
 // Get active playlists
 router.post('/getplaylists', isLoggedIn, (req, res, next) => {
+  console.log("user", req.body._userId)
   User.findById(req.body._userId)
-  .select('_activePlaylists')
   .populate('_activePlaylists')
-  .exec()
   .then(playlist => {
       console.log('TCL: Playlist data retrieved ', playlist)
       res.json(playlist)
@@ -99,6 +108,16 @@ router.delete('/playlists/:playlistId/songs/:songId', (req, res, next) => {
     { $pull: { _songs: req.params.songId } })
     .then(data => {
       console.log('Itemdeleted', data)
+      res.json(data)
+    })
+    .catch(err => console.log(err))
+})
+
+// Delete playlist
+router.delete('/playlists/delete/prostitueradrovpanna', (req, res, next) => {
+  Playlist.findOneAndDelete(req.params.playlistId)
+    .then(data => {
+      console.log('Playlist deleted: ', data)
       res.json(data)
     })
     .catch(err => console.log(err))

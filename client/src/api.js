@@ -121,6 +121,13 @@ export default {
         return res.data})
       .catch(errHandler)
   },
+  deletePlaylist(playlistId) {
+    return service
+      .delete(`/playlists/delete/prostitueradrovpanna`)
+      .then(res => {
+        return res.data})
+      .catch(errHandler)
+  },
 
   addPlaylist(data) {
     console.log('api called with following data ', data)
@@ -146,6 +153,13 @@ export default {
       .then(res => {
         return res.data
       })
+      .catch(errHandler)
+  },
+  getHostedPlaylists(userId) {
+    console.log('api called with following data: ', userId)
+    return service
+      .post('/gethostedplaylists', userId)
+      .then(res => res.data)
       .catch(errHandler)
   },
 

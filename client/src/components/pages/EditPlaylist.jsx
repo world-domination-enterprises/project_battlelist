@@ -17,7 +17,9 @@ export default class EditPlayList extends Component {
       currentlyEditingName: '', //  LIFTED
       _userSelectedSongs: [], //  LIFTED
       _songsInPlaylist: [], //  LIFTED
-      songsMetaData: null,  //  LIFTED; TODO: use this of just iframes?
+      songsMetaData: null,  //  LIFTED
+      _userId: null,
+      activePlaylists: []
     }
     this.addSong = this.addSong.bind(this); //  TODO: is this necessary?
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -33,19 +35,6 @@ export default class EditPlayList extends Component {
         searchResults: items
       })
     })
-
-
-    // const spotifyApi = new SpotifyWebApi()
-
-    // spotifyApi.setAccessToken(this.state.accessToken);
-    // spotifyApi.searchTracks(this.state.searchString, { limit: 10, })
-    //   .then(data => {
-    //     JSON.stringify(data, null, 2)
-    //     console.log('TCL: SongSearch -> handleKeyUp -> data', data)
-    //     this.setState({
-    //       searchResults: data.body.tracks.items
-    //     })
-    //   })
   }
 
   addSong(key) {
@@ -92,35 +81,19 @@ export default class EditPlayList extends Component {
   }
 
   componentDidMount() {
-    //  API: Refresh spotify access token and get it to run Spotify-API calls
-    // api.refreshAndFetchAccessToken()
-    //   .then(data => {
-    //     console.log('TCL: refreshAndFetchAccessToken', data)
-    //     this.setState({
-    //       accessToken: data.body.access_token,
-    //     })
-    //   })
+    api.getProfile()
+    .then(user => {
+      console.log('dattttatat:',user)
+      this.setState({
+        _userId: user._id,
+        activePlaylists: user._activePlaylists
+      })
+    })
     this.fetchPlaylistSongs()
-
-    //  API: Get user data from database
-    // api.getProfile()
-    //   .then(user => {
-    // 		console.log('TCL: ListItemSongsearch -> componentDidMount -> user', user)
-    //     this.setState({
-    //       _userCurrentlyEditing: user._currentlyEditing
-    //     })
-    //     api.fetchSongs({
-    //       _playlistId: this.state._userCurrentlyEditing
-    //     })
-    //     .then(playlist => {
-    //       console.log('TCL: CreatePlayList -> componentDidMount -> playlist', playlist)
-    //       this.setState({
-    //         songsMetaData: playlist._songs,
-    //         currentlyEditingName: playlist.name,
-    //       })
-    //     })
-    //   })
-    
+    setTimeout(() => {
+      if (!this.state.activePlaylists.includes(this.props.match.params.playlistId))
+      this.updateUser()
+    }, 500)
   } 
 
   fetchPlaylistSongs() {
@@ -132,6 +105,10 @@ export default class EditPlayList extends Component {
           currentlyEditingName: playlist.name,
         })
       })
+  }
+  updateUser(){
+    api.updateUser(this.state._userId, this.props.match.params.playlistId)
+    .then(res => console.log('tillbäaks',res))
   }
   render() {
     if (!api.isLoggedIn()) {
