@@ -113,6 +113,11 @@ ul {
   height: calc(100vh - 82px);
   overflow-x: hidden;
 }
+
+#invited-user-emails-container {
+  color: black;
+}
+
 .edit-playlist-item {
   background: $secondary;
 }
