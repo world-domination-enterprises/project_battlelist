@@ -14,19 +14,12 @@ export default class EditPlayList extends Component {
       accessToken: '',
       searchString: '',
       searchResults: [],
-<<<<<<< HEAD
-      currentlyEditingName: '', //  LIFTED
-      _userSelectedSongs: [], //  LIFTED
-      _songsInPlaylist: [], //  LIFTED
-      songsMetaData: null,  //  LIFTED
+      currentlyEditingName: '', 
+      _userSelectedSongs: [], 
+      _songsInPlaylist: [], 
+      songsMetaData: null, 
       _userId: null,
       activePlaylists: []
-=======
-      currentlyEditingName: '', 
-      _userSelectedSongs: [],
-      _songsInPlaylist: [],
-      songsMetaData: null,        // TODO: use this of just iframes?
->>>>>>> 2b8c5223c4377e7a839014b0a25d61de7255d740
     }
     this.addSong = this.addSong.bind(this); //  TODO: is this necessary?
     this.handleSearchChange = this.handleSearchChange.bind(this);
