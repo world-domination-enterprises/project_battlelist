@@ -3,7 +3,7 @@ import { Route, Link, NavLink, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import LoginCallback from './pages/LoginCallback';
 import api from '../api';
-import ChoosePlaylist from './pages/ChoosePlaylist';
+import CreatePlaylist from './pages/CreatePlaylist';
 import SuccessLogin from './pages/SuccessLogin';
 import EditPlaylist from './pages/EditPlaylist';
 import YourPlaylists from './pages/YourPlaylists';
@@ -29,7 +29,7 @@ class App extends Component {
           </div>
         </header>
         <Switch>
-          <Route path="/" exact component={ChoosePlaylist} />
+          <Route path="/" exact component={CreatePlaylist} />
           <Route path='/playlist/:playlistId' component={EditPlaylist} />
           <Route path="/login" component={Login} />
           <Route path='/login/callback' component={LoginCallback} />}

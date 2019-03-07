@@ -1,7 +1,7 @@
 import React from 'react'
 import { ListGroup, ListGroupItem, Button } from 'reactstrap';
 
-export default function inviteUserEmails(props) {
+export default function InviteUserEmailsListItem(props) {
   return (
     <div id='invited-user-emails-container'>
       {props.emails.map((email, i) => 
