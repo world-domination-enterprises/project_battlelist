@@ -36,7 +36,7 @@ class App extends Component {
           <Route path='/success-login' component={SuccessLogin} />}
           <Route path='/your-playlists' component={YourPlaylists} />}
 
-    <Route render={() => <div classNane="error"><br /><h2>404</h2><br /><img src="https://media.giphy.com/media/6Q2KA5ly49368/giphy.gif" alt="404" /></div>}/>
+    <Route render={() => <div className="error"><br /><h2>404</h2><br /><img src="https://media.giphy.com/media/6Q2KA5ly49368/giphy.gif" alt="404" /></div>}/>
         </Switch>
       </div>
     );

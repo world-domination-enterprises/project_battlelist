@@ -110,7 +110,7 @@ ul {
   width: 150px;
 }
 // Style for your playlists component
-.your-playlist-container, .choose-playlist-container {
+.your-playlist-container, .choose-playlist-container, .error, .Login {
   background: #121212;
   color: #fff;
   height: calc(100vh - 82px);
@@ -118,6 +118,10 @@ ul {
 }
 .edit-playlist-item {
   background: $secondary;
+}
+.button {
+  border: 0;
+  height: 30px;
 }
 // --------------------
 // Style for Home component
@@ -135,8 +139,7 @@ ul {
 
 // --------------------
 // Style for Create playlist component
-.create-playlist-container {
-}
+
 // --------------------
 // Animations
 @keyframes fadeIn {

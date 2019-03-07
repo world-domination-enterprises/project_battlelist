@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import api from '../../api';
+import { Button } from 'reactstrap';
 
 export default class YourPlaylists extends Component {
   constructor (props) {
@@ -52,10 +53,10 @@ export default class YourPlaylists extends Component {
         <h1 className="mb-5">Your active playlists:</h1>
          <ul className="list-unstyled">
           {this.state.activePlaylistsMetaData ? this.state.activePlaylistsMetaData.map((playlist, i) =>
-            <li className="edit-playlist-item d-flex justify-content-center" key={i}>
+            <li className="edit-playlist-item d-flex align-self-left col-6 mx-auto" key={i}>
             <h4 className="align-self-center">{playlist.name}</h4>
-            <button className="btn btn-success m-2" onClick={(e) => this.redirectToPlaylist(playlist._id)}>Edit</button>
-            {this.state.hostedPlaylists.includes(playlist._id) && <button className="btn btn-danger" onClick={() => api.deletePlaylist(playlist._id)}>Delete</button>}
+            <Button className="button btn btn-success m-1" onClick={(e) => this.redirectToPlaylist(playlist._id)}>Edit</Button>
+            {this.state.hostedPlaylists.includes(playlist._id) && <Button className="button btn btn-danger m-1" onClick={() => api.deletePlaylist(playlist._id)}>Delete</Button>}
             </li>
           ) : <h2>Loading playlists..</h2>}
         </ul>
