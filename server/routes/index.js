@@ -27,7 +27,7 @@ router.post("/playlists", (req, res, next) => {
     name: req.body.name,
     _users: req.body._host,
     _host: req.body._host,
-    maxSongs: req.body.maxSongs,
+    maxSongsPerUser: req.body.maxSongsPerUser,
     isActive: req.body.isActive,
   })
     .then(playlistCreated => {
