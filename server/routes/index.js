@@ -4,6 +4,7 @@ const router = express.Router();
 const Song = require("../models/Song");
 const User = require('../models/User')
 const Playlist = require("../models/Playlist");
+const nodemailer = require("nodemailer");
 
 //  Get the users profile
 router.get('/profile', isLoggedIn, (req, res, next) => {
@@ -24,8 +25,9 @@ router.put('/profile', isLoggedIn, (req, res, next) => {
 router.post("/playlists", (req, res, next) => {
   Playlist.create({
     name: req.body.name,
-    _users: req.body._users,
+    _users: req.body._host,
     _host: req.body._host,
+    maxSongs: req.body.maxSongs,
     isActive: req.body.isActive,
   })
     .then(playlistCreated => {
@@ -47,7 +49,8 @@ router.post("/songsearch/add", (req, res, next) => {
       genres: 'testing',
       year: req.body.releaseDate,
       songId: req.body.songId,
-      imgUrl: req.body.imgUrl
+      imgUrl: req.body.imgUrl,
+      album: req.body.album
     })
     .then(songCreated => {
       console.log('TCL: songCreated', songCreated, req.body._PLtoAddSongTo)
@@ -101,5 +104,34 @@ router.delete('/playlists/:playlistId/songs/:songId', (req, res, next) => {
     .catch(err => console.log(err))
 })
 
+//Nodemailer route
+router.post('/send-email', (req, res, next) => {
+  let { email, username, playlistId, playlistName } = req.body
+  let subject = 
+  'You have been invited to collaborate on a Listr. playlist!'
+  let message = 
+  `You got a listr invite to collaborate on the playlist <strong>${playlistName}</strong> hosted by <strong>${username}</strong>. <br><br>
+  Follow this link and start adding tracks: <a href="https://listr-music.herokuapp.com/playlist/${playlistId}">https://listr-music.herokuapp.com/playlist/${playlistId}</a> <br><br>
+  <i>-Listr team</i>`
+
+  let transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: process.env.EMAIL_ADDRESS,
+      pass: process.env.EMAIL_PASSWORD
+    }
+  });
+  email.forEach((mail) => {
+  transporter.sendMail({
+    from: '"Listr. Team 🎵" <listrmusic@gmail.com>',
+    to: mail, 
+    subject: subject, 
+    text: message,
+    html: `<p>${message}</p>`
+  })
+})
+  .then(info => res.render('message', {email, subject, message, info}))
+  .catch(error => console.log(error));
+});
 
 module.exports = router;

@@ -37,7 +37,7 @@ export default class SongSearch extends Component {
         <div className='SongSearch scroll-y'>
         <Container>
 
-       <h1 className="mb-0 mt-3">Search tracks</h1>   
+       <h1 className="mb-0 mt-3 currently">Search tracks</h1>   
         <Form onSubmit={(e) => this.handleSubmit(e)} >
           <FormGroup>
             <Label for="song"></Label>
@@ -64,7 +64,8 @@ export default class SongSearch extends Component {
           key={i}
           mykey={i} 
           songId={song.id} 
-          rlsDate={song.album.release_date}/>
+          rlsDate={song.album.release_date}
+          album={song.album.name}/>
         )}
         </Container>
         </div>

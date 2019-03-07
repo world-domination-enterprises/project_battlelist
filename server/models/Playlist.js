@@ -30,6 +30,9 @@ const playlistSchema = new mongoose.Schema({
       createdAt: 'created_at',
       updatedAt: 'updated_at',
   },
+  maxSongs: {
+    type: String,
+  }
 });
 
 const Song = require("../models/Song");

@@ -31,8 +31,8 @@ render() {
           <CardTitle className="align-self-center w-100 m-0 text-left pl-3">
           <strong>{this.props.title}</strong>
           <br />{this.props.artist}
-          <br /> {this.props.rlsDate}</CardTitle>
-          <Button className="btn-success pl-2 pr-2" onClick={() => this.props.onSongAdd(this.props.mykey)} >Add+</Button>
+          <br /> {this.props.album}</CardTitle>
+          <Button className="btn-success pl-3 pr-3" onClick={() => this.props.onSongAdd(this.props.mykey)} >&#43;</Button>
           </div>
       </Col>
     </Row>

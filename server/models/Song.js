@@ -17,7 +17,8 @@ const SongSchema = new mongoose.Schema({
     required: true,
   },
   songId: String, // TODO: rename it to spotifyId
-  imgUrl: String
+  imgUrl: String,
+  album: String
 })
 
 const Song = mongoose.model('Song', SongSchema);

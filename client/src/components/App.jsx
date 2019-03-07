@@ -21,7 +21,7 @@ class App extends Component {
           <h1 className="App-title m-0">LISTR.</h1>
           <p className="m-0 logo-p">Join the party or create your own</p>
           </div>
-          <div class="nav-wrapper align-self-center mr-2">
+          <div className="nav-wrapper align-self-center mr-2">
           <NavLink exact to="/" >Create a playlist</NavLink>
           {api.isLoggedIn() && <NavLink exact to="/your-playlists">Your Playlists</NavLink>}
           {!api.isLoggedIn() && <NavLink to="/login">Login</NavLink>}
@@ -36,7 +36,7 @@ class App extends Component {
           <Route path='/success-login' component={SuccessLogin} />}
           <Route path='/your-playlists' component={YourPlaylists} />}
 
-          <Route render={() => <h2>404</h2>} />
+    <Route render={() => <div classNane="error"><br /><h2>404</h2><br /><img src="https://media.giphy.com/media/6Q2KA5ly49368/giphy.gif" alt="404" /></div>}/>
         </Switch>
       </div>
     );

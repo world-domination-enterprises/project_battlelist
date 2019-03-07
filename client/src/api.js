@@ -139,8 +139,16 @@ export default {
       .then(res => res.data)
       .catch(errHandler)
   },
+  sendEmailInvite(data){
+    console.log('The following address was sen to the backend: ', data)
+    return service
+      .post('/send-email', data)
+      .then(res => {
+        return res.data
+      })
+      .catch(errHandler)
+  },
 
-  
   getLastPlaylistVisited() {
     return localStorage.getItem("lastPlaylistVisited")
   },

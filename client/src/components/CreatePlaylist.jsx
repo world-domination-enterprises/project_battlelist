@@ -9,7 +9,7 @@ export default class createplaylist extends Component {
     super(props)
     this.state = {
       playlistName: '',
-      playlistCode: '',
+      playlistId: '',
       _playlistCreator: null,
       _playlistEditor: null,
       emailInputText: '',
@@ -17,9 +17,10 @@ export default class createplaylist extends Component {
       inviteUserEmails: [],
       start: null,
       end: null,
-      numberOfSongs: 0,
+      maxSongs: 0,
       // isActive: false
     }
+    this.sendInvite = this.sendInvite.bind(this);
   }
 
   handleSubmit(stateFieldName, e) {
@@ -82,13 +83,19 @@ export default class createplaylist extends Component {
       name: this.state.playlistName,
       _users: this.state._playlistCreator,
       _host: this.state._playlistCreator,
+      maxSongs: this.state.maxSongs,
       isActive: true,
     })
     .then(playlistAdded => {
-			console.log('TCL: ChoosePlaylist -> addPlaylist -> playlistAdded', playlistAdded)
-      this.props.history.push("/editplaylist")
+      console.log('TCL: ChoosePlaylist -> addPlaylist -> playlistAdded', playlistAdded)
+      this.setState({
+        playlistId: playlistAdded._id
+      })
+      this.sendInvite()
       api.updateUser(this.state._playlistCreator, playlistAdded._id)
       .then(res => {
+        console.log("I have updated the user", this.props.history)
+        this.props.history.push(`/playlist/${this.state.playlistId}`)
         console.log('TCL: ChoosePlaylist -> addPlaylist -> userUpdated', res)
         })
       .catch(err => console.log(err)) 
@@ -96,11 +103,14 @@ export default class createplaylist extends Component {
     .catch(err => console.log(err))  
   }
 
-  joinPlaylist() {
-    api.joinPlaylist({
-      playlistCode: this.state.playlistCode,
-      _playlistEditor: this.state._playlistEditor
+  sendInvite() {
+    api.sendEmailInvite({
+      email: this.state.inviteUserEmails,
+      username: this.state.userName,
+      playlistId: this.state.playlistId,
+      playlistName: this.state.playlistName
     })
+    .then(res => console.log(res))
   }
 
   componentDidMount() {
@@ -110,6 +120,7 @@ export default class createplaylist extends Component {
         this.setState({
           _playlistCreator: user._id,
           _playlistEditor: user._id,
+          userName: user.username
         })
       })
   }
