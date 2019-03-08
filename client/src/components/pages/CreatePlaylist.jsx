@@ -3,7 +3,8 @@ import api from '../../api';
 import NamePlaylist from '../NamePlaylist';
 import InviteUsers from '../InviteUsers';
 import MaxSongs from '../MaxSongs';
-import { Button } from 'reactstrap';
+import { Button, Card, CardBody } from 'reactstrap';
+import spotifyApi from '../../spotifyApi';
 
 export default class CreatePlaylist extends Component {
   constructor (props) {
@@ -22,6 +23,7 @@ export default class CreatePlaylist extends Component {
       isActive: false,
       _activePlaylists: [],
       _userId: '',
+      spotifyId: '',
 
       /*********** RENDER SWITCHES ************/
       renderEmail: false,
@@ -42,6 +44,11 @@ export default class CreatePlaylist extends Component {
   // handleSubmit(e) {
   //   e.preventDefault()
   // }
+
+  createPlaylistOnSpotify() {
+    spotifyApi.createPlaylists(this.state.spotifyId, this.state.playlistName, { 'public' : true, })
+    .then(data => console.log('DEBUG --- FRONTEND ---: playlist created on Spotify: ', data))
+  }
 
   handleSubmit (e, stateFieldName) {
     switch(e.target.id) {
@@ -130,28 +137,28 @@ export default class CreatePlaylist extends Component {
     ) 
     //  if no error ---> execute method
     {
-      api.addPlaylist({
-        name: this.state.playlistName,
-        _users: this.state._playlistCreator,
-        _host: this.state._playlistCreator,
-        maxSongsPerUser: this.state.maxSongsPerUser,
-        isActive: true,
-      })
-      .then(playlistAdded => {
-        console.log('TCL: CreatePlaylist -> addPlaylist -> playlistAdded', playlistAdded)
-        this.setState({
-          playlistId: playlistAdded._id
-        })
-        this.sendInvite()
-        api.updateUser(this.state._playlistCreator, playlistAdded._id)
-        .then(res => {
-          console.log("I have updated the user", this.props.history)
-          this.props.history.push(`/playlist/${this.state.playlistId}`)
-          console.log('TCL: CreatePlaylist -> addPlaylist -> userUpdated', res)
+          api.addPlaylist({
+            name: this.state.playlistName,
+            _users: this.state._playlistCreator,
+            _host: this.state._playlistCreator,
+            maxSongsPerUser: this.state.maxSongsPerUser,
+            isActive: true,
           })
-        .catch(err => console.log(err)) 
-        })
-      .catch(err => console.log(err))  
+          .then(playlistAdded => {
+            console.log('TCL: CreatePlaylist -> addPlaylist -> playlistAdded', playlistAdded)
+            this.setState({
+              playlistId: playlistAdded._id
+            })
+            this.sendInvite()
+            api.updateUser(this.state._playlistCreator, playlistAdded._id)
+            .then(res => {
+              console.log("I have updated the user", this.props.history)
+              this.props.history.push(`/playlist/${this.state.playlistId}`)
+              console.log('TCL: CreatePlaylist -> addPlaylist -> userUpdated', res)
+              })
+            .catch(err => console.log(err)) 
+            })
+          .catch(err => console.log(err))  
     } 
     //  if error ---> set error message
     else if (!this.state.playlistName && this.state.maxSongsPerUser > 0) {
@@ -174,7 +181,9 @@ export default class CreatePlaylist extends Component {
           _playlistCreator: user._id,
           _playlistEditor: user._id,
           userName: user.username,
-          _userId: user._id   //  TODO: is this needed?
+          _userId: user._id,
+          spotifyId: user.spotifyID
+             //  TODO: is this needed?
         })
       })
   }
@@ -200,7 +209,16 @@ export default class CreatePlaylist extends Component {
     return (
       <div className='create-playlist-container d-flex justify-content-center'>
         <div className="create-playlist-wrapper flex-column align-self-center col-12">
-        <NamePlaylist
+
+        <Card className='col-5 mx-auto border-white text-light bg-dark'>
+          <CardBody>
+            {this.state.playlistName && <h2><strong>« {this.state.playlistName} »</strong></h2>}
+            <small>You and <strong>{this.state['inviteUserEmails'].length} friend{this.state['inviteUserEmails'].length!==  1 && 's'}</strong> will edit the playlist.</small><br/>
+            <small>There will be <strong>{(this.state['inviteUserEmails'].length + 1) * this.state.maxSongsPerUser} song{(this.state['inviteUserEmails'].length * this.state.maxSongsPerUser !==  1) && 's'}</strong> in your playlist.</small><br/>
+          </CardBody>
+        </Card>
+
+        <NamePlaylist className='col-4 mx-auto'
           value={this.state.playlistName}
           onNameSubmit={this.handleSubmit} 
           onNameChange={this.handleNameChange}
@@ -228,6 +246,7 @@ export default class CreatePlaylist extends Component {
         
         {/* BUTTON TO SUBMIT ALL FORM DATA ADDED TO STATE */}
         <Button className="btn btn-success mx-auto mt-4" onClick={() => this.addPlaylist()}>Create Playlist</Button>
+        <Button className="btn btn-success mx-auto mt-4" onClick={() => this.createPlaylistOnSpotify()}>Create Playlist on Spotify</Button>
         </div>
       </div>
     )

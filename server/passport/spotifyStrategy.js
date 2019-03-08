@@ -2,7 +2,6 @@ const passport = require("passport");
 const SpotifyStrategy = require("passport-spotify").Strategy;
 const SpotifyWebApi = require("spotify-web-api-node");
 const User = require("../models/User");
-const bcrypt = require("bcrypt");
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,

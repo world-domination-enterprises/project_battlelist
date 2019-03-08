@@ -37,5 +37,21 @@ export default {
           return data.body.tracks.items
         })
     }
+  },
+
+  createPlaylists(userId, playlistName, options) {
+    if (!this.accessToken) {
+      return api.refreshAndFetchAccessToken()
+        .then(data => {
+          this.accessToken = data.body.access_token
+          spotifyWebApi.setAccessToken(this.accessToken);
+          return spotifyWebApi.createPlaylist(userId, playlistName, options)
+        })
+        .then(data => {
+        console.log('DEBUG --- playlist created on spotify: ', data)
+        return data
+      })
+      .catch(err => console.log('ERROR creating playlist on spotify: ', err))
+    }
   }
-}
+}  

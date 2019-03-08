@@ -31,7 +31,7 @@ export default class InviteUsers extends Component {
       <div className='invite-users-container'>
 
           <Label for="email-entry" className="m-3">Invite your friends:</Label> <br/>
-          <InputGroup className='email-input d-flex justify-content-center'>
+          <InputGroup className='email-input d-flex justify-content-center col-12'>
             <Input 
               type="email" 
               name="invite-user-email"
@@ -39,7 +39,7 @@ export default class InviteUsers extends Component {
               placeholder="Enter friend's email address" 
               value={this.props.value} 
               onChange={(e) => this.props.onEmailChange('emailInputText',  e)}
-              className="col-4"
+              className="col-3"
               />
             <InputGroupAddon addonType="append">
              <Button 
@@ -50,10 +50,8 @@ export default class InviteUsers extends Component {
             </InputGroupAddon>
           </InputGroup>
           {this.state.emailInputError && <div className='error'><small> {this.state.emailInputError}</small></div>}
-          
-          <small>You and {this.props['inviteUserEmails'].length} friend{this.props['inviteUserEmails'].length!==  1 && 's'} will edit the playlist.</small><br/>
-          {this.props.emailInputError && <small className="text-danger"> {this.props.emailInputError}</small>}
 
+          {this.props.emailInputError && <small className="text-danger"> {this.props.emailInputError}</small>}
 
           {this.props.inviteUserEmails[0] && <InviteUserEmailsListItem emails={this.props.inviteUserEmails} onEmailDelete={this.props.onEmailDelete}/>}
       </div>

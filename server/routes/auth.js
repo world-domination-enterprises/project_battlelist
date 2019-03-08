@@ -20,7 +20,11 @@ router.get(
       "user-top-read", // https://developer.spotify.com/documentation/general/guides/scopes/#user-top-read
       "user-read-birthdate", // https://developer.spotify.com/documentation/general/guides/scopes/#user-read-birthdate
       "user-read-private", // https://developer.spotify.com/documentation/general/guides/scopes/#user-read-private
-      "user-read-email" // https://developer.spotify.com/documentation/general/guides/scopes/#user-read-email
+      "user-read-email", // https://developer.spotify.com/documentation/general/guides/scopes/#user-read-email
+      "playlist-read-private",
+      "playlist-modify-public",
+      "playlist-modify-private",
+      "playlist-read-collaborative"
     ],
     showDialog: true
   })

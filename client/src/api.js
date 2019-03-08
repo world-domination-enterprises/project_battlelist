@@ -146,6 +146,7 @@ export default {
       .then(res => res.data)
       .catch(errHandler)
   },
+
   sendEmailInvite(data){
     console.log('The following address was sen to the backend: ', data)
     return service
@@ -155,6 +156,7 @@ export default {
       })
       .catch(errHandler)
   },
+  
   getHostedPlaylists(userId) {
     console.log('api called with following data: ', userId)
     return service

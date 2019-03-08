@@ -3,6 +3,7 @@ import { ListGroup, ListGroupItem, Button } from 'reactstrap';
 
 export default function InviteUserEmailsListItem(props) {
   return (
+    // TODO --- IMPORTANT: this needs to be styled
     <div id='invited-user-emails-container'>
       <ListGroup id='invited-user-emails-list' className='email-input' >
         {props.emails.map((email, i) => 
