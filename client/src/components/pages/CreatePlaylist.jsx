@@ -5,6 +5,7 @@ import InviteUsers from '../InviteUsers';
 import MaxSongs from '../MaxSongs';
 import { Button, Card, CardBody } from 'reactstrap';
 import spotifyApi from '../../spotifyApi';
+import { Link } from 'react-router-dom'
 
 export default class CreatePlaylist extends Component {
   constructor (props) {
@@ -24,6 +25,7 @@ export default class CreatePlaylist extends Component {
       _activePlaylists: [],
       _userId: '',
       spotifyId: '',
+      spotifyPlaylistUrl: '',
 
       /*********** RENDER SWITCHES ************/
       renderEmail: false,
@@ -47,9 +49,15 @@ export default class CreatePlaylist extends Component {
 
   createPlaylistOnSpotify() {
     spotifyApi.createPlaylists(this.state.spotifyId, this.state.playlistName, { 'public' : true, })
-    .then(data => console.log('DEBUG --- FRONTEND ---: playlist created on Spotify: ', data))
-  }
-
+    .then(data => {
+      console.log('DEBUG --- FRONTEND ---: playlist created on Spotify: ', data)
+      this.setState({
+        spotifyPlaylistUrl: data.body.external_urls.spotify
+      })
+      console.log('state set: ', this.state.spotifyPlaylistUrl)
+    })
+  }  
+  
   handleSubmit (e, stateFieldName) {
     switch(e.target.id) {
       case 'name-playlist-form':
@@ -143,7 +151,8 @@ export default class CreatePlaylist extends Component {
             _host: this.state._playlistCreator,
             maxSongsPerUser: this.state.maxSongsPerUser,
             isActive: true,
-          })
+            spotifyPlaylistUrl: this.state.spotifyPlaylistUrl
+          }) 
           .then(playlistAdded => {
             console.log('TCL: CreatePlaylist -> addPlaylist -> playlistAdded', playlistAdded)
             this.setState({
@@ -215,6 +224,8 @@ export default class CreatePlaylist extends Component {
             {this.state.playlistName && <h2><strong>« {this.state.playlistName} »</strong></h2>}
             <small>You and <strong>{this.state['inviteUserEmails'].length} friend{this.state['inviteUserEmails'].length!==  1 && 's'}</strong> will edit the playlist.</small><br/>
             <small>There will be <strong>{(this.state['inviteUserEmails'].length + 1) * this.state.maxSongsPerUser} song{(this.state['inviteUserEmails'].length * this.state.maxSongsPerUser !==  1) && 's'}</strong> in your playlist.</small><br/>
+            <Link to={this.state.spotifyPlaylistUrl}>{this.state.spotifyPlaylistUrl}</Link>
+
           </CardBody>
         </Card>
 
@@ -247,6 +258,7 @@ export default class CreatePlaylist extends Component {
         {/* BUTTON TO SUBMIT ALL FORM DATA ADDED TO STATE */}
         <Button className="btn btn-success mx-auto mt-4" onClick={() => this.addPlaylist()}>Create Playlist</Button>
         <Button className="btn btn-success mx-auto mt-4" onClick={() => this.createPlaylistOnSpotify()}>Create Playlist on Spotify</Button>
+        {this.state.spotifyPlaylistUrl && <div><strong><Link to={this.state.spotifyPlaylistUrl}/></strong></div>}
         </div>
       </div>
     )

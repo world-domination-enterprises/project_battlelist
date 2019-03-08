@@ -25,6 +25,7 @@ const playlistSchema = new mongoose.Schema({
   },
   playlistCode: String,
   spotifyId: String,
+  spotifyPlaylistUrl: String,
   }, {
     timestamps: {
       createdAt: 'created_at',
