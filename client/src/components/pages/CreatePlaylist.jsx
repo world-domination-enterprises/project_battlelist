@@ -258,7 +258,6 @@ export default class CreatePlaylist extends Component {
         {/* BUTTON TO SUBMIT ALL FORM DATA ADDED TO STATE */}
         <Button className="btn btn-success mx-auto mt-4" onClick={() => this.addPlaylist()}>Create Playlist</Button>
         <Button className="btn btn-success mx-auto mt-4" onClick={() => this.createPlaylistOnSpotify()}>Create Playlist on Spotify</Button>
-        {this.state.spotifyPlaylistUrl && <div><strong><a href={this.state.spotifyPlaylistUrl}>{this.state.spotifyPlaylistUrl}</a></strong></div>}
         </div>
       </div>
     )
