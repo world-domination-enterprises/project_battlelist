@@ -41,6 +41,9 @@ ul {
 
 // --------------------
 // Style for App component
+.invited-user-emails-list-item, .list-group-item {
+  background: $primary;
+}
 .App-title {
   font-size: 52px;
   letter-spacing: .25em;
@@ -162,6 +165,21 @@ ul {
 // --------------------
 // Style for Create playlist component
 
+// --------------------
+// Landing page
+.landing-page-container {
+  color: #fff;
+  height: calc(100vh - 82px);
+  overflow-x: hidden;
+
+  h1 {
+    font-size: 60px;
+    letter-spacing: .25em;
+  }
+}
+.landing-title {
+  font-size: 20px;
+}
 // --------------------
 // Animations
 @keyframes fadeIn {
