@@ -41,7 +41,8 @@ ul {
 
 // --------------------
 // Style for App component
-.invited-user-emails-list-item, .list-group-item {
+.invited-user-emails-list-item, .list-group-item, .invited-user-emails-container {
+  color: #fff;
   background: $primary;
 }
 .App-title {
