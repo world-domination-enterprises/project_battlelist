@@ -14,7 +14,7 @@ export default class SuccessLogin extends Component {
     api.getProfile()
     .then(() => {
       setTimeout(() => {
-        let url = "/"
+        let url = "/create-playlist"
         if (api.getLastPlaylistVisited())
           url = "/playlist/" + api.getLastPlaylistVisited()
           
